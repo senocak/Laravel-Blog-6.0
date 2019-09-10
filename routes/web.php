@@ -13,5 +13,6 @@
  
 
 Route::get('/', 'HomeController@index')->name('index');
+Route::get('/yazi/{id}', 'HomeController@yazi')->name('yazi');
 Auth::routes();
 

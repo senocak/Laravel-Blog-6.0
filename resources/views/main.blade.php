@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <style>body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}</style>
+        <link rel="shortcut icon" href="https://laravel.com/img/logomark.min.svg" type="image/x-icon">
     </head>
     <body class="w3-light-grey">
         <div class="w3-content" style="max-width:1800px">

@@ -7,13 +7,19 @@ use App\Yazi;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller{
+    private $return_dizi=[];
+    public function __construct(){
+        $this->return_dizi["kategoriler"] = Kategori::all();        
+    }
     public function index(){
-        $yazilar = Yazi::whereAktif(1)->with('kategori')->with('user')->orderBy("sira","asc")->paginate(2);
-        $kategoriler = Kategori::all();
-        if (count($yazilar)==0) {
+        $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with('user')->orderBy("sira","asc")->paginate(4);
+        if (count($this->return_dizi["yazilar"])==0) {
             return view('errors.404');
         }else{
-            return view('index', ['yazilar' => $yazilar,'kategoriler' => $kategoriler]);
+            return view('index', ['return_dizi' => $this->return_dizi]);
         }
+    }
+    public function yazi($url){
+        return $url;
     }
 }
