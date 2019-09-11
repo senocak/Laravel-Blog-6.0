@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>W3.CSS Template</title>
+        <title>@yield('title', 'Anıl Şenocak - Laravel6.0 Blog Template')</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -15,7 +15,7 @@
     <body class="w3-light-grey">
         <div class="w3-content" style="max-width:1800px">
             <header class="w3-container w3-center w3-padding-32"> 
-                <h1><b>Anıl Şenocak</b></h1>
+                <h1><b><a href="/" style="text-decoration: none">Anıl Şenocak</a></b></h1>
                 <p>@yield('kategoriler')</p>
             </header>
             <div class="w3-row">
