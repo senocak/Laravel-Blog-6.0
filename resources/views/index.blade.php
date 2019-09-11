@@ -8,8 +8,8 @@
         <div class="w3-card-4 w3-margin w3-white">
             <div class="w3-display-container">
                 <a href="/yazi/{{ $yazi->url }}"><img class="w3-center" src="/images/{{ $yazi->kategori->resim }}" style="width:100%"></a>
-                <div class="w3-display-bottomleft w3-container w3-button w3-padding-large w3-white">{{$yazi->user->name}}</div>
-                <div class="w3-display-topleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/kategori/{{ $yazi->url }}">{{$yazi->kategori->baslik}}</a></div>
+                <div class="w3-display-bottomleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/yazar/{{$yazi->user->id}}">{{$yazi->user->name}}</a></div>
+                <div class="w3-display-topleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/kategori/{{ $yazi->kategori->url }}">{{$yazi->kategori->baslik}}</a></div>
                 <div class="w3-display-bottomright w3-container w3-button w3-padding-large w3-white"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yazi->created_at))->diffForHumans() ?></div> 
             </div>
             <div class="w3-container">
@@ -55,5 +55,14 @@
 @section('kategoriler')
     @foreach ($return_dizi["kategoriler"] as $kategori)
         <a href="/kategori/{{ $kategori->url }}"><span class="w3-tag">{{ $kategori->baslik }}</span></a>
+    @endforeach
+@endsection
+@section('yorumlar')
+    @foreach ($return_dizi["yorumlar"] as $yorum)
+        <li class="w3-padding-16">
+            <img src="/images/pp.jpg" alt="Image" class="w3-left w3-margin-right w3-circle" style="width:70px">
+            <span class="w3-large">{{$yorum->isim}}</span> <span class="w3-right"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?></span><br>
+            <span><a href="/yazi/{{$yorum->yazi->url}}#yorum_{{$yorum->id}}" style="text-decoration: none">{{$yorum->yazi->baslik}}</a></span>
+        </li>
     @endforeach
 @endsection

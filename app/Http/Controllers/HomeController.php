@@ -1,29 +1,36 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Kategori;
+use App\User;
 use App\Yazi;
 use App\Yorum;
 use Illuminate\Http\Request;
-
 class HomeController extends Controller{
     private $return_dizi=[];
     public function __construct(){
-        $this->return_dizi["kategoriler"] = Kategori::all();        
+        $this->return_dizi["kategoriler"] = Kategori::all();    
+        $this->return_dizi["yorumlar"] = Yorum::whereOnay("1")->with("yazi")->limit(5)->get();        
     }
-    public function index($kategori_url = null){
-        if ($kategori_url != null) {
-            $kategori = Kategori::whereUrl($kategori_url)->firstOrFail();
-            $this->return_dizi["yazilar"] = Yazi::whereKategori_id($kategori->id)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
-        } else {
-            $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
-        }        
+    public function index(){
+        $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);      
         if (count($this->return_dizi["yazilar"])==0) {
-            return view('errors.404');
+            return view('404');
         }else{
             return view('index', ['return_dizi' => $this->return_dizi]);
         }
+    }
+    public function kategori($url=null){
+        if ($url == null) {
+            return view('404');
+        }
+        $kategori = Kategori::whereUrl($url)->firstOrFail();
+        $this->return_dizi["yazilar"] = Yazi::whereKategori_id($kategori->id)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
+        return view('index', ['return_dizi' => $this->return_dizi]);
+    }
+    public function yazar($id=null){
+        $user = User::findOrFail($id);
+        $this->return_dizi["yazilar"] = Yazi::whereUser_id($user->id)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
+        return view('index', ['return_dizi' => $this->return_dizi]);
     }
     public function yazi($url){
         $this->return_dizi["yazilar"] = Yazi::whereUrl($url)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->firstOrFail();

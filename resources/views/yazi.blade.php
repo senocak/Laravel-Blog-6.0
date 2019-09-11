@@ -42,7 +42,7 @@
     </form>
     <ul class="w3-ul w3-card-4 w3-margin w3-white">
         @foreach ($return_dizi["yazilar"]->yorum as $yorum)
-            <li class="w3-bar">
+            <li class="w3-bar" id="yorum_{{$yorum->id}}">
                 <span class="w3-bar-item w3-white w3-right"><i class="fa fa-check" title="Onaylanmış Yorum"></i></span>
                 <img src="/images/img_avatar6.png" class="w3-bar-item w3-circle w3-hide-small" style="width:90px">
                 <span class="w3-large w3-margin w3-center">{{$yorum->isim}}</span><br>
@@ -55,5 +55,14 @@
 @section('kategoriler')
     @foreach ($return_dizi["kategoriler"] as $kategori)
         <a href="/kategori/{{ $kategori->url }}"><span class="w3-tag">{{ $kategori->baslik }}</span></a>
+    @endforeach
+@endsection
+@section('yorumlar')
+    @foreach ($return_dizi["yorumlar"] as $yorum)
+        <li class="w3-padding-16">
+            <img src="/images/pp.jpg" alt="Image" class="w3-left w3-margin-right w3-circle" style="width:70px">
+            <span class="w3-large">{{$yorum->isim}}</span> <span class="w3-right"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?></span><br>
+            <span><a href="/yazi/{{$yorum->yazi->url}}#yorum_{{$yorum->id}}" style="text-decoration: none">{{$yorum->yazi->baslik}}</a></span>
+        </li>
     @endforeach
 @endsection
