@@ -14,7 +14,8 @@ class UserSeeder extends Seeder{
             'password' => $obj->password,
             'remember_token' => $obj->remember_token,
             'created_at' => $obj->created_at,
-            'updated_at' => $obj->updated_at
+            'updated_at' => $obj->updated_at,
+            "is_admin"=>$obj->is_admin
           ));
         }
     }

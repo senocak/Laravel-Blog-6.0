@@ -12,8 +12,13 @@ class HomeController extends Controller{
     public function __construct(){
         $this->return_dizi["kategoriler"] = Kategori::all();        
     }
-    public function index(){
-        $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
+    public function index($kategori_url = null){
+        if ($kategori_url != null) {
+            $kategori = Kategori::whereUrl($kategori_url)->firstOrFail();
+            $this->return_dizi["yazilar"] = Yazi::whereKategori_id($kategori->id)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
+        } else {
+            $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
+        }        
         if (count($this->return_dizi["yazilar"])==0) {
             return view('errors.404');
         }else{
