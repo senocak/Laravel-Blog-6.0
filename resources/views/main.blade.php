@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <style>body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}</style>
         <link rel="shortcut icon" href="https://laravel.com/img/logomark.min.svg" type="image/x-icon">
+        {!! Html::style('css/prism.css') !!}
+        {!! Html::script('js/prism.js') !!}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body class="w3-light-grey">
         <div class="w3-content" style="max-width:1800px">
@@ -73,8 +76,6 @@
             <br>
         </div>
         <footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-            <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Previous</button>
-            <button class="w3-button w3-black w3-padding-large w3-margin-bottom">Next »</button>
             <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
         </footer>
     </body>

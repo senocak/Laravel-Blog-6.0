@@ -14,7 +14,7 @@
             </div>
             <div class="w3-container">
                 <b style="font-size: x-large"><a style="text-decoration: none;" href="/yazi/{{ $yazi->url }}">{{$yazi->baslik}}</a></b>
-                <b class="w3-right"><b>Yorumlar </b><span class="w3-badge">2</span></b>
+                <b class="w3-right"><b>Yorumlar </b><span class="w3-badge">{{count($yazi->yorum)}}</span></b>
             </div>
             <div class="w3-container">
                 <p>

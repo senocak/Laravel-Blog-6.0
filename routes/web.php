@@ -13,6 +13,7 @@
  
 
 Route::get('/', 'HomeController@index')->name('index');
-Route::get('/yazi/{id}', 'HomeController@yazi')->name('yazi');
+Route::get('/yazi/{url}', 'HomeController@yazi')->name('yazi');
+Route::post('/yazi/{url}', 'HomeController@yorum_ekle')->name('yorum_ekle');
 Auth::routes();
 
