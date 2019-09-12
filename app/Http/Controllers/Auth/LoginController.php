@@ -19,7 +19,9 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
+    public function showLoginForm(){
+        return redirect()->route("index");
+    }
     /**
      * Where to redirect users after login.
      *

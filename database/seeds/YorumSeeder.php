@@ -8,11 +8,10 @@ class YorumSeeder extends Seeder{
         foreach ($data as $obj) {
             Yorum::create(array(
             'id' => $obj->id,
-            'isim' => $obj->isim,
-            'email' => $obj->email,
             'yorum' => $obj->yorum,
             'onay' => $obj->onay,
-            'yazi_id' => $obj->yazi_id
+            'yazi_id' => $obj->yazi_id,
+            "user_id"=>$obj->user_id
           ));
         }
     }

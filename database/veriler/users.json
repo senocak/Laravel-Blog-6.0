@@ -1,3 +1,4 @@
 [
-    {"id":"1","name":"Lorem Ipsum","email":"lorem@ipsum.com","email_verified_at":null,"password":"$2y$10$u4.HmpmEjDj9VcDNeFZ9M.jlzet9V3ofsid5Xp5u275.pd6.L5qKO","remember_token":null,"created_at":"2019-07-26 19:36:42","updated_at":"2019-07-26 19:36:42", "is_admin":1}
+    {"id":"1","name":"Zakk Wylde","email":"zakk@wylde.com","email_verified_at":null,"password":"$2y$10$.fxjHsp/Ke1WD.TybccfUex1./EYAWEZYLkz3lPRauUb.PPm4dw0u","remember_token":null,"created_at":"2019-07-26 19:36:42","updated_at":"2019-07-26 19:36:42", "is_admin":1, "picture":"zakk-Wylde.jpg"},
+    {"id":"2","name":"Dimebag Darrel","email":"dime@darrel.com","email_verified_at":null,"password":"$2y$10$T4ZpfmoKJOuy0t/wKrw79exmoYgGZFhFvLO8cxN4FVo6BNAaxemW.","remember_token":null,"created_at":"2019-08-21 19:36:42","updated_at":"2019-08-26 19:36:42", "is_admin":0, "picture":"dimebag.png"}
 ]

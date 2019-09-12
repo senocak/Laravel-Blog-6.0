@@ -12,6 +12,7 @@
         {!! Html::script('js/prism.js') !!}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>img{max-width:100%;max-height:100%;}</style>
+        @yield('stylesheet')
     </head>
     <body class="w3-light-grey">
         <div class="w3-content" style="max-width:1800px">
@@ -52,41 +53,69 @@
                                 @if (Auth::user()->is_admin == 1)
                                     <span class="w3-bar-item w3-right"><i class="fa fa-check" title="Admin Hesabı"></i></span>
                                 @endif
-                                <img src="/images/img_avatar6.png" class="w3-bar-item w3-circle w3-hide-small" style="width:80px">
-                                <span class="w3-large w3-margin w3-center">{{ Auth::user()->name }}</span><br>
+                                <img src="/images/{{ Auth::user()->picture }}" class="w3-bar-item w3-circle w3-hide-small" style="width:80px">
+                                <a href="/profil"><span class="w3-large w3-margin w3-center">{{ Auth::user()->name }}</span></a><br>
                                 <span class="w3-margin w3-center">{{ Auth::user()->email }}</span><br>
                                 <div class="w3-row">
-                                    <div class="w3-half">
-                                        <a class="w3-btn w3-black w3-ripple w3-block" href="/admin">Admin Paneli</a>
+                                    <div class="w3-third">
+                                        <a class="w3-btn w3-green w3-ripple w3-block" href="/profil">Profil</a>
                                     </div>
-                                    <div class="w3-half"> 
-                                            
+                                    @if (Auth::user()->is_admin == 1)
+                                        <div class="w3-third">
+                                            <a class="w3-btn w3-black w3-ripple w3-block" href="/admin">Admin Paneli</a>
+                                        </div>
+                                    @endif 
+                                    <div class="w3-third">
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                             {{ csrf_field() }}
                                             <button type="submit" class="w3-btn w3-red w3-ripple w3-block" href="{{ route('logout') }}" >Çıkış Yap</button>
                                         </form>
                                     </div>
+                                </div> 
+                                <!--
+                                <div class="w3-container w3-red w3-cell">
+                                    <a class="w3-btn w3-black w3-ripple w3-block" href="/admin">Admin Paneli</a>
                                 </div>
+                                <div class="w3-container w3-green w3-cell">
+                                    <p>Hello W3.CSS Layout.</p>
+                                </div>
+                                -->
                             </div>
                         @else
-                            <div class="w3-container w3-center "><h4>Giriş Yap</h4></div>
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <p><input type="email" class="w3-input w3-border" required="" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}"></p> 
-                                <p><input type="password" class="w3-input w3-border" required="" placeholder="{{ __('Password') }}" name="password"></p>
-                                <p><input class="w3-check w3-border" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>{{ __('Remember Me') }}</p>
-                                <div class="w3-row">
-                                    <div class="w3-half">
-                                        <button type="submit" class="w3-button w3-block w3-teal">{{ __('Login') }} &nbsp; ❯</button>
-                                    </div>
-                                    <div class="w3-half"> 
-                                        @if (Route::has('password.request')) 
-                                            <a class="w3-btn w3-button w3-red w3-block" >{{ __('Forgot Your Password?') }}</a>
-                                            <!--<a class="w3-btn w3-button w3-red w3-block" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>-->
-                                        @endif
-                                    </div>
-                                </div>
-                            </form>
+                            <div class="w3-bar w3-black">
+                                <button class="w3-bar-item w3-button tablink w3-red" onclick="openCity(event,'login')">Giriş Yap</button>
+                                <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'register')">Kayıt Ol</button> 
+                            </div> 
+                            <div id="login" class="w3-container w3-border auth">
+                                <form method="POST" action="{{ route('login') }}">
+                                    @csrf
+                                    <p><input type="email" class="w3-input w3-border" required="" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}"></p> 
+                                    <p><input type="password" class="w3-input w3-border" required="" placeholder="{{ __('Password') }}" name="password"></p>
+                                    <p><input class="w3-check w3-border" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>{{ __('Remember Me') }}</p>
+                                    <p><button type="submit" class="w3-button w3-block w3-green">{{ __('Login') }} &nbsp; ❯</button></p>
+                                </form>
+                            </div>
+                            <div id="register" class="w3-container w3-border auth" style="display:none"> 
+                                <form method="POST" action="{{ route('register') }}">
+                                    @csrf
+                                    <p>
+                                        <input type="text" class="w3-input w3-border" required="" placeholder="{{ __('İsminiz') }}" name="name" value="{{ old('name') }}">
+                                        @error('name')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                    </p> 
+                                    <p>
+                                        <input type="email" class="w3-input w3-border" required="" placeholder="{{ __('E-Mail Adresiniz') }}" name="email" value="{{ old('email') }}">
+                                        @error('email')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                    </p>
+                                    <p>
+                                        <input type="password" class="w3-input w3-border" required="" placeholder="{{ __('Şifreniz') }}" name="password" autocomplete="new-password">
+                                        @error('password')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                    </p> 
+                                    <p>
+                                        <input type="password" class="w3-input w3-border" required="" placeholder="{{ __('Şifreniz Tekrar') }}" name="password_confirmation" autocomplete="new-password">
+                                    </p>
+                                    <p><button type="submit" class="w3-button w3-block w3-green">{{ __('Kayıt Ol') }} &nbsp; ❯</button></p>
+                                </form> 
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -94,5 +123,20 @@
             <br>
         </div>
         <footer class="w3-container w3-padding-32 w3-margin-top" style="height: 250px;background-image: url({{url('/')}}/images/footer.png);background-position-x: -120px;background-position-y: 0px;"></footer>
+        <script>
+            function openCity(evt, authName) {
+                var i, x, tablinks;
+                x = document.getElementsByClassName("auth");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablink");
+                for (i = 0; i < x.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+                }
+                document.getElementById(authName).style.display = "block";
+                evt.currentTarget.className += " w3-red";
+            }
+        </script> 
     </body>
 </html>

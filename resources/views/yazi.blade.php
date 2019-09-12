@@ -28,24 +28,28 @@
                 </div>
             </div>
         </div>
-    </div>  
-    <form class="w3-container w3-card-4 w3-margin" method="POST">
-        {{ csrf_field() }}
-        <div class="w3-half">
-            <p><label class="w3-text-grey">İsim</label><input class="w3-input w3-border" type="text" required="" placeholder="İsminiz" name="isim"></p>
-        </div>
-        <div class="w3-half">
-            <p><label class="w3-text-grey">Email</label><input class="w3-input w3-border" type="email" required="" placeholder="Email Adresiniz" name="email"></p>
-        </div>
-        <p><label class="w3-text-grey">Yorum</label><textarea class="w3-input w3-border" style="resize:none" placeholder="Yorumunuz" name="yorum"></textarea></p>
-        <p><button type="submit" class="w3-btn w3-padding w3-teal" style="width:120px">Göder &nbsp; ❯</button></p>
-    </form>
+    </div>
+    @if(Auth::check())
+        <form class="w3-container w3-card-4 w3-margin" method="POST">
+            {{ csrf_field() }}
+            <div class="w3-half">
+                <p><label class="w3-text-grey">İsim</label><input class="w3-input w3-border" type="text" required="" placeholder="İsminiz" name="isim" value="{{ Auth::user()->name }}" disabled></p>
+            </div>
+            <div class="w3-half">
+                <p><label class="w3-text-grey">Email</label><input class="w3-input w3-border" type="email" required="" placeholder="Email Adresiniz" name="email" value="{{ Auth::user()->email }}" disabled></p>
+            </div>
+            <p><label class="w3-text-grey">Yorum</label><textarea class="w3-input w3-border" style="resize:none" placeholder="Yorumunuz" name="yorum"></textarea></p>
+            <p><button type="submit" class="w3-btn w3-padding w3-teal" style="width:120px">Göder &nbsp; ❯</button></p>
+        </form>
+    @else
+        <div class="w3-container w3-white w3-margin w3-center"><h2>Lütfen Giriş Yapınız</h2></div>
+    @endif
     <ul class="w3-ul w3-card-4 w3-margin w3-white">
         @foreach ($return_dizi["yazilar"]->yorum as $yorum)
             <li class="w3-bar" id="yorum_{{$yorum->id}}">
                 <span class="w3-bar-item w3-white w3-right"><i class="fa fa-check" title="Onaylanmış Yorum"></i></span>
-                <img src="/images/img_avatar6.png" class="w3-bar-item w3-circle w3-hide-small" style="width:90px">
-                <span class="w3-large w3-margin w3-center">{{$yorum->isim}}</span><br>
+                <img src="/images/{{$yorum->user->picture}}" class="w3-bar-item w3-c ircle w3-hide-small" style="width:70px">
+                <span class="w3-large w3-margin w3-center">{{$yorum->user->name}}</span><br>
                 <span class="w3-margin w3-center"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?></span><br>
                 <div class="w3-bar-item" style="text-align: justify"><span>{{$yorum->yorum}}</span></div>
             </li> 
