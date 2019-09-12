@@ -5,6 +5,8 @@ use App\User;
 use App\Yazi;
 use App\Yorum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller{
     private $return_dizi=[];
     public function __construct(){
