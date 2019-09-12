@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
@@ -14,7 +13,7 @@ class User extends Authenticatable{
     public function yazi(){
         return $this->hasMany("App\Yazi");
     }
-    public function yorum()    {
+    public function yorum(){
         return $this->hasMany('App\Yorum');
     }
 }

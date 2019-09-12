@@ -64,8 +64,8 @@
 @section('yorumlar')
     @foreach ($return_dizi["yorumlar"] as $yorum)
         <li class="w3-padding-16">
-            <img src="/images/pp.jpg" alt="Image" class="w3-left w3-margin-right w3-circle" style="width:70px">
-            <span class="w3-large">{{$yorum->isim}}</span> <span class="w3-right"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?></span><br>
+            <img src="/images/{{$yorum->kategori->resim}}" alt="Image" class="w3-left w3-margin-right " style="width:100px">
+            <span class="w3-large">{{$yorum->user->name}}</span> <span class="w3-right"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?></span><br>
             <span><a href="/yazi/{{$yorum->yazi->url}}#yorum_{{$yorum->id}}" style="text-decoration: none">{{$yorum->yazi->baslik}}</a></span>
         </li>
     @endforeach

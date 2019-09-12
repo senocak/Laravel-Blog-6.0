@@ -65,15 +65,24 @@
     </div>
 
     <div id="yorum" class="w3-container w3-border profile" style="display:none">
-        <h2>Paris</h2>
-        <p>Paris is the capital of France.</p> 
-    </div>
-
+        @foreach ($return_dizi["user_yorumlar"] as $yorumlar)
+            <div class="w3-row">
+                <div class="w3-col s3">
+                <img src="/images/{{$yorumlar->kategori->resim}}" style="width:100%">
+                </div>
+                <div class="w3-col s9 w3-container">
+                    <h3><a href="/yazi/{{$yorumlar->yazi->url}}" target="_blank">{{$yorumlar->yazi->baslik}}</a></h3>
+                    <p>{{$yorumlar->yorum}}</p>
+                    <hr>
+                    {{$yorumlar->kategori}}
+                </div>
+            </div>
+        @endforeach  
+    </div> 
     <div id="Tokyo" class="w3-container w3-border profile" style="display:none">
         <h2>Tokyo</h2>
         <p>Tokyo is the capital of Japan.</p>
-    </div> 
-
+    </div>  
     <script>
         function openProfile(evt, profileName) {
             var i, x, tablinks;
@@ -94,11 +103,11 @@
     @foreach ($return_dizi["kategoriler"] as $kategori)
         <a href="/kategori/{{ $kategori->url }}"><span class="w3-tag">{{ $kategori->baslik }}</span></a>
     @endforeach
-@endsection
+@endsection 
 @section('yorumlar')
     @foreach ($return_dizi["yorumlar"] as $yorum)
         <li class="w3-padding-16">
-            <img src="/images/{{$yorum->user->picture}}" alt="Image" class="w3-left w3-margin-right " style="width:40px">
+            <img src="/images/{{$yorum->kategori->resim}}" alt="Image" class="w3-left w3-margin-right " style="width:100px">
             <span class="w3-large">{{$yorum->user->name}}</span> <span class="w3-right"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?></span><br>
             <span><a href="/yazi/{{$yorum->yazi->url}}#yorum_{{$yorum->id}}" style="text-decoration: none">{{$yorum->yazi->baslik}}</a></span>
         </li>

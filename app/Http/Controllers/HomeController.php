@@ -14,7 +14,7 @@ class HomeController extends Controller{
     private $return_dizi=[];
     public function __construct(){
         $this->return_dizi["kategoriler"] = Kategori::all();    
-        $this->return_dizi["yorumlar"] = Yorum::whereOnay("1")->with("yazi")->with("user")->limit(5)->get();        
+        $this->return_dizi["yorumlar"] = Yorum::whereOnay("1")->with("yazi")->with("user")->with("kategori")->limit(5)->get();        
     }
     public function index(){
         $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);      
@@ -56,7 +56,7 @@ class HomeController extends Controller{
     }
     public function profil(){
         $this->return_dizi["user"] = Auth::user();
-        
+        $this->return_dizi["user_yorumlar"] = Yorum::whereUser_id(Auth::user()->id)->with("yazi")->with("kategori")->get(); 
         return view('profil', ['return_dizi' => $this->return_dizi]);
     }
     public function profil_guncelle(Request $request){

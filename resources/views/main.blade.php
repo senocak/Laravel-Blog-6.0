@@ -25,28 +25,6 @@
                     @yield('body')
                 </div>
                 <div class="w3-col l4">
-                    <div class="w3-card w3-margin w3-margin-top">
-                        <img src="/images/pp.jpg" style="width:100%">
-                            <div class="w3-container w3-white">
-                            <h4>
-                                <b>Anıl Şenocak</b>
-                                <div  class="w3-right">
-                                    <a href="https://github.com/senocak" target="_blank"><i class="fa fa-github"></i></a>
-                                    <a href="https://linkedin.com/in/anilsenocak27" target="_blank"><i class="fa fa-linkedin"></i></a>
-                                </div>
-                            </h4>
-                            <p>Love to play, Play to ride, Ride to live, Live to love </p>
-                        </div>
-                    </div>
-                    <hr>
-                    <!-- Posts -->
-                    <div class="w3-card w3-margin">
-                        <div class="w3-container w3-padding"><h4>Son Yorumlar</h4></div>
-                        <ul class="w3-ul w3-hoverable w3-white">
-                            @yield('yorumlar')
-                        </ul>
-                    </div>
-                    <hr> 
                     <div class="w3-card w3-margin ">
                         @if(Auth::check())
                             <div class="w3-bar">
@@ -54,32 +32,24 @@
                                     <span class="w3-bar-item w3-right"><i class="fa fa-check" title="Admin Hesabı"></i></span>
                                 @endif
                                 <img src="/images/{{ Auth::user()->picture }}" class="w3-bar-item w3-circle w3-hide-small" style="width:80px">
-                                <a href="/profil"><span class="w3-large w3-margin w3-center">{{ Auth::user()->name }}</span></a><br>
+                                <span class="w3-large w3-margin w3-center">{{ Auth::user()->name }}</span><br>
                                 <span class="w3-margin w3-center">{{ Auth::user()->email }}</span><br>
-                                <div class="w3-row">
-                                    <div class="w3-third">
+                                <div class="w3-cell-row">
+                                    <div class="w3-cell">
                                         <a class="w3-btn w3-green w3-ripple w3-block" href="/profil">Profil</a>
                                     </div>
                                     @if (Auth::user()->is_admin == 1)
-                                        <div class="w3-third">
+                                        <div class="w3-cell">
                                             <a class="w3-btn w3-black w3-ripple w3-block" href="/admin">Admin Paneli</a>
                                         </div>
                                     @endif 
-                                    <div class="w3-third">
+                                    <div class="w3-cell">
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                             {{ csrf_field() }}
                                             <button type="submit" class="w3-btn w3-red w3-ripple w3-block" href="{{ route('logout') }}" >Çıkış Yap</button>
                                         </form>
                                     </div>
-                                </div> 
-                                <!--
-                                <div class="w3-container w3-red w3-cell">
-                                    <a class="w3-btn w3-black w3-ripple w3-block" href="/admin">Admin Paneli</a>
-                                </div>
-                                <div class="w3-container w3-green w3-cell">
-                                    <p>Hello W3.CSS Layout.</p>
-                                </div>
-                                -->
+                                </div>  
                             </div>
                         @else
                             <div class="w3-bar w3-black">
@@ -117,6 +87,28 @@
                                 </form> 
                             </div>
                         @endif
+                    </div>
+                    <hr>
+                    <!-- Posts -->
+                    <div class="w3-card w3-margin">
+                        <div class="w3-container w3-padding"><h4>Son Yorumlar</h4></div>
+                        <ul class="w3-ul w3-hoverable w3-white">
+                            @yield('yorumlar')
+                        </ul>
+                    </div>
+                    <hr>  
+                    <div class="w3-card w3-margin w3-margin-top">
+                        <img src="/images/pp.jpg" style="width:100%">
+                            <div class="w3-container w3-white">
+                            <h4>
+                                <b>Anıl Şenocak</b>
+                                <div  class="w3-right">
+                                    <a href="https://github.com/senocak" target="_blank"><i class="fa fa-github"></i></a>
+                                    <a href="https://linkedin.com/in/anilsenocak27" target="_blank"><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </h4>
+                            <p>Love to play, Play to ride, Ride to live, Live to love </p>
+                        </div>
                     </div>
                 </div>
             </div>
