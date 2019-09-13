@@ -75,7 +75,7 @@
                     <span class="w3-large">
                         <a href="/yazi/{{$yorumlar->url}}#yorum_{{$y->id}}" style="text-decoration: none">{{$yorumlar->baslik}}</a>
                     </span>
-                    <span class="w3-right">
+                    <span class="w3-right w3-tiny">
                         <?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($y->created_at))->diffForHumans() ?>    
                     </span>
                     <br>
