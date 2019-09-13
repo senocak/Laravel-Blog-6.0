@@ -21,25 +21,18 @@
         <button class="w3-bar-item w3-button tablink w3-red" onclick="openProfile(event,'profil')">Profil Düzenle</button>
         <button class="w3-bar-item w3-button tablink" onclick="openProfile(event,'yorum')">Yorumlarım</button>
         <button class="w3-bar-item w3-button tablink" onclick="openProfile(event,'Tokyo')">Tokyo</button>
-    </div> 
+    </div>  
     <div id="profil" class="w3-container w3-border profile">
-        <div class="w3-col  margtest">
-            <div class="w3-col s3 w3-center">
-                <div class="w3-card-4 test">
+        <div class="w3-col  margtest">  
+            <div class="w3-col s3 w3-center"> 
                     <img src="/images/{{ Auth::user()->picture }}" >
                     <div class="w3-container">
                         <h4><b>{{ Auth::user()->name }}</b></h4>    
-                        <p>{{ Auth::user()->email }}</p>    
-                        @if (Auth::user()->email_verified_at)
-                            <p>Email Adresini Onaylanmış</p>
-                        @else
-                            <p>Email Adresini Onayla</p>
-                        @endif
+                        <p>{{ Auth::user()->email }}</p>  
                         @if (Auth::user()->is_admin == 1)
                             <p>Admin Hesabı <i class="fa fa-check" title="Admin Hesabı"></i></p>
                         @endif
-                    </div>
-                </div>
+                    </div> 
             </div>
             @if(Session::has('hata'))<div class="w3-red "><p>{{ Session::get('hata') }}</p></div>@endif
             @if(Session::has('basarı'))<div class="w3-green"><p>{{ Session::get('basarı') }}</p></div>@endif
@@ -63,22 +56,24 @@
             </div>
         </div> 
     </div>
-
     <div id="yorum" class="w3-container w3-border profile" style="display:none">
-        @foreach ($return_dizi["user_yorumlar"] as $yorumlar)
-            <div class="w3-row">
-                <div class="w3-col s3">
-                <img src="/images/{{$yorumlar->kategori->resim}}" style="width:100%">
-                </div>
-                <div class="w3-col s9 w3-container">
-                    <h3><a href="/yazi/{{$yorumlar->yazi->url}}" target="_blank">{{$yorumlar->yazi->baslik}}</a></h3>
-                    <p>{{$yorumlar->yorum}}</p>
-                    <hr>
-                    {{$yorumlar->kategori}}
-                </div>
-            </div>
-        @endforeach  
-    </div> 
+        <ul class="w3-ul w3-card-4">
+            @foreach ($return_dizi["user_yorumlar"] as $yorumlar) 
+                @foreach ($yorumlar->yorum as $y)  
+                    <li class="w3-bar">
+                        <a href="/kategori/{{$yorumlar->kategori->url}}"><img src="/images/{{$yorumlar->kategori->resim}}" class="w3-bar-item" style="width:185px"></a>
+                        <div class="w3-bar-item" style="width: 77%; text-align: justify">
+                            <a href="/yazi/{{$yorumlar->url}}#yorum_{{$y->id}}" style="text-decoration: none">
+                                <span class="w3-large">{{$yorumlar->baslik}}</span>
+                                <br>
+                                <span >{{$y->yorum}}</span>
+                            </a>
+                        </div>
+                    </li> 
+                @endforeach
+            @endforeach  
+        </ul> 
+    </div>
     <div id="Tokyo" class="w3-container w3-border profile" style="display:none">
         <h2>Tokyo</h2>
         <p>Tokyo is the capital of Japan.</p>
@@ -104,12 +99,29 @@
         <a href="/kategori/{{ $kategori->url }}"><span class="w3-tag">{{ $kategori->baslik }}</span></a>
     @endforeach
 @endsection 
-@section('yorumlar')
-    @foreach ($return_dizi["yorumlar"] as $yorum)
-        <li class="w3-padding-16">
-            <img src="/images/{{$yorum->kategori->resim}}" alt="Image" class="w3-left w3-margin-right " style="width:100px">
-            <span class="w3-large">{{$yorum->user->name}}</span> <span class="w3-right"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?></span><br>
-            <span><a href="/yazi/{{$yorum->yazi->url}}#yorum_{{$yorum->id}}" style="text-decoration: none">{{$yorum->yazi->baslik}}</a></span>
-        </li>
-    @endforeach
+@section('yorumlar') 
+    <ul class="w3-ul w3-card-4">
+        @foreach ($return_dizi["yorumlar"] as $yorumlar) 
+            @foreach ($yorumlar->yorum as $y)
+                <li class="w3-padding-16" style="text-align: justify">
+                    <a href="/kategori/{{$yorumlar->kategori->url}}">
+                        <img src="/images/{{$yorumlar->kategori->resim}}" class="w3-left w3-margin-right " style="width:100px">
+                    </a>
+                    <span class="w3-large">
+                        <a href="/yazi/{{$yorumlar->url}}#yorum_{{$y->id}}" style="text-decoration: none">{{$yorumlar->baslik}}</a>
+                    </span>
+                    <span class="w3-right w3-tiny">
+                        <?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($y->created_at))->diffForHumans() ?>    
+                    </span>
+                    <br>
+                    <span>
+                        <a href="/yazi/{{$yorumlar->url}}#yorum_{{$y->id}}" style="text-decoration: none">
+                            {{substr($y->yorum,0,100)}}...
+                        </a>
+                    </span>
+                    {{$y->id}}
+                </li>
+            @endforeach
+        @endforeach  
+    </ul> 
 @endsection

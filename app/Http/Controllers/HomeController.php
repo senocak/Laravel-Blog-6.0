@@ -4,17 +4,23 @@ use App\Kategori;
 use App\User;
 use App\Yazi;
 use App\Yorum;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Image;
 use Storage; 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller{
     private $return_dizi=[];
     public function __construct(){
-        $this->return_dizi["kategoriler"] = Kategori::all();    
-        $this->return_dizi["yorumlar"] = Yorum::whereOnay("1")->with("yazi")->with("user")->with("kategori")->limit(5)->get();        
+        $this->return_dizi["kategoriler"] = Kategori::all();
+        $this->return_dizi["limit"] = 5;
+        $this->return_dizi["yorumlar"] = Yazi::whereHas('yorum', function($query){$query->whereOnay(1)->orderBy("id","desc")->limit($this->return_dizi["limit"]);})
+                                                ->with(['yorum' => function ($query){$query->whereOnay(1)->orderBy("id","desc")->limit($this->return_dizi["limit"]);}])
+                                                ->with("kategori")
+                                                ->get();
     }
     public function index(){
         $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);      
@@ -56,7 +62,7 @@ class HomeController extends Controller{
     }
     public function profil(){
         $this->return_dizi["user"] = Auth::user();
-        $this->return_dizi["user_yorumlar"] = Yorum::whereUser_id(Auth::user()->id)->with("yazi")->with("kategori")->get(); 
+        $this->return_dizi["user_yorumlar"] = Yazi::whereHas('yorum', function($query) {$query->whereOnay(1)->where('user_id', auth()->user()->id);})->with(['yorum' => function ($query){ $query->whereOnay(1)->where('user_id', auth()->user()->id); }])->with("kategori")->with("user")->get();
         return view('profil', ['return_dizi' => $this->return_dizi]);
     }
     public function profil_guncelle(Request $request){
@@ -101,10 +107,48 @@ class HomeController extends Controller{
         $user->save();
         return redirect()->route("profil");
     }
+    public function email_onayla(){
+        $user = User::findOrFail(Auth::user()->id);
+        $user->email_verify_token = $this->generateRandomString();
+        if ($user->save()) {
+            
+            $data['title'] = "This is Test Mail Tuts Make";
+            Mail::send('auth.verify', $data, function($message) {
+                $message->to('tutsmake@gmail.com', 'Receiver Name')->subject('Tuts Make Mail');
+            }); 
+            if (Mail::failures()) {
+                return response()->Fail('Sorry! Please try again latter');
+            }else{
+                return response()->success('Great! Successfully send in your mail');
+            }
+
+
+        } else {
+            return "0";
+        }
+        
+    }
+    public function email_onayla_get($token){ 
+        $user = User::where("email_verify_token",$token)->firstOrFail();
+        if ($user) {
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+        }
+        return redirect()->route("profil");
+    }
     public function self_url($title){
         $search = array(" ","ö","ü","ı","ğ","ç","ş","/","?","&","'",",","A","B","C","Ç","D","E","F","G","Ğ","H","I","İ","J","K","L","M","N","O","Ö","P","R","S","Ş","T","U","Ü","V","Y","Z","Q","X");
         $replace = array("-","o","u","i","g","c","s","-","","-","","","a","b","c","c","d","e","f","g","g","h","i","i","j","k","l","m","n","o","o","p","r","s","s","t","u","u","v","y","z","q","x");
         $new_text = str_replace($search,$replace,trim($title));
         return $new_text;
+    }
+    public function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

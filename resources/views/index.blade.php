@@ -58,11 +58,28 @@
     @endforeach
 @endsection
 @section('yorumlar')
-    @foreach ($return_dizi["yorumlar"] as $yorum)
-        <li class="w3-padding-16">
-            <img src="/images/{{$yorum->kategori->resim}}" alt="Image" class="w3-left w3-margin-right " style="width:100px">
-            <span class="w3-large">{{$yorum->user->name}}</span> <span class="w3-right"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?></span><br>
-            <span><a href="/yazi/{{$yorum->yazi->url}}#yorum_{{$yorum->id}}" style="text-decoration: none">{{$yorum->yazi->baslik}}</a></span>
-        </li>
-    @endforeach
+    <ul class="w3-ul w3-card-4">
+        @foreach ($return_dizi["yorumlar"] as $yorumlar) 
+            @foreach ($yorumlar->yorum as $y)
+                <li class="w3-padding-16" style="text-align: justify">
+                    <a href="/kategori/{{$yorumlar->kategori->url}}">
+                        <img src="/images/{{$yorumlar->kategori->resim}}" class="w3-left w3-margin-right " style="width:100px">
+                    </a>
+                    <span class="w3-large">
+                        <a href="/yazi/{{$yorumlar->url}}#yorum_{{$y->id}}" style="text-decoration: none">{{$yorumlar->baslik}}</a>
+                    </span>
+                    <span class="w3-right">
+                        <?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($y->created_at))->diffForHumans() ?>    
+                    </span>
+                    <br>
+                    <span>
+                        <a href="/yazi/{{$yorumlar->url}}#yorum_{{$y->id}}" style="text-decoration: none">
+                            {{substr($y->yorum,0,100)}}...
+                        </a>
+                    </span>
+                    {{$y->id}}
+                </li>
+            @endforeach
+        @endforeach  
+    </ul> 
 @endsection

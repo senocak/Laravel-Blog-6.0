@@ -24,13 +24,38 @@
                 <div class="w3-col l8 s12">
                     @yield('body')
                 </div>
-                <div class="w3-col l4">
+                <div class="w3-col l4">   
+                    <p class="mesaj_gonderildi w3-margin w3-container w3-green" style="display: none;">If you click on the "Hide" button, I will disappear.</p> 
+                    <script type="text/javascript"> 
+                        $(document).ready(function(){  
+                            $(".mesaj_gonderildi").hide();
+                            $(".mail_gonder_btn").click(function(e){  
+                                e.preventDefault(); 
+                                $.ajax({
+                                    type:'POST',
+                                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                                    url:'{{ route('email_onayla') }}', 
+                                    success:function(data){ 
+                                        $(".mesaj_gonderildi").show();
+                                        if (data == 1) {  
+                                            $(".mesaj_gonderildi").text("Kod Mailinize Gönderildi.");
+                                        } else { 
+                                            $(".mesaj_gonderildi").text("Hata Meydana Geldi.");
+                                        }
+                                    } 
+                                });
+                            });
+                        });
+                    </script>   
                     <div class="w3-card w3-margin ">
                         @if(Auth::check())
                             <div class="w3-bar">
-                                @if (Auth::user()->is_admin == 1)
-                                    <span class="w3-bar-item w3-right"><i class="fa fa-check" title="Admin Hesabı"></i></span>
+                                @if (Auth::user()->email_verified_at)
+                                    <span class="w3-bar-item w3-right"><i class="fa fa-check" title="Email Adresi Onaylanmış"></i></span>
                                 @endif
+                                @if (Auth::user()->is_admin == 1)
+                                    <span class="w3-bar-item w3-right"><i class="fa fa-star" title="Admin Yetkili Kullanıcı"></i></span>
+                                @endif 
                                 <img src="/images/{{ Auth::user()->picture }}" class="w3-bar-item w3-circle w3-hide-small" style="width:80px">
                                 <span class="w3-large w3-margin w3-center">{{ Auth::user()->name }}</span><br>
                                 <span class="w3-margin w3-center">{{ Auth::user()->email }}</span><br>
@@ -49,6 +74,14 @@
                                             <button type="submit" class="w3-btn w3-red w3-ripple w3-block" href="{{ route('logout') }}" >Çıkış Yap</button>
                                         </form>
                                     </div>
+                                    @if (Auth::user()->email_verified_at == null)
+                                        <div class="w3-cell"> 
+                                            <form action="{{ route('email_onayla') }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="w3-btn w3-blue w3-ripple w3-block mail_gonder_btn">Mail Onayla</button>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>  
                             </div>
                         @else
