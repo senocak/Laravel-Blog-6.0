@@ -31,18 +31,18 @@ class YaziController extends Controller{
     }
     public function yazilar_index(){
         if (Auth::user()->is_admin == 1) {
-            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->paginate($this->dizi["limit"]);
+            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->orderBy("created_at","asc")->paginate($this->dizi["limit"]);
         } else { 
-            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->paginate($this->dizi["limit"]);
+            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->orderBy("created_at","asc")->paginate($this->dizi["limit"]);
         } 
         return view("admin.yazilar",["dizi" => $this->dizi]);
     }
     public function yazilar_limit($limit = null){
         if ($limit == null) $limit = $this->dizi["limit"]; 
         if (Auth::user()->is_admin == 1) {
-            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->paginate($limit);
+            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("created_at","asc")->paginate($limit);
         } else { 
-            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->paginate($limit);
+            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("created_at","asc")->paginate($limit);
         }
         $this->dizi["limit"]=$limit;
         return view("admin.yazilar",["dizi" => $this->dizi]);

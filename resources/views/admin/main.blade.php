@@ -34,14 +34,14 @@
         </div>
       </div>
       <hr> 
-      <div class="w3-bar-block">
+      <div class="w3-bar-block"> 
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Kapat</a>
-        <a href="/admin" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Anasayfa</a>
-        <a href="/admin/yazilar" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Yazılar</a>
-        <a href="/admin/kategoriler" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Kategoriler</a>
-        <a href="/admin/kullanicilar" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Kullanıcılar</a>
-        <a href="/admin/mesajlar" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw"></i>  Mesajlar</a> 
-        <a href="/admin/ayarlar" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Ayarlar</a><br><br>
+        <a href="/admin" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "") w3-blue @endif"><i class="fa fa-users fa-fw"></i>  Anasayfa</a>
+        <a href="/admin/yazilar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "yazilar") w3-blue @endif"><i class="fa fa-eye fa-fw"></i>  Yazılar</a>
+        <a href="/admin/kategoriler" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "kategoriler") w3-blue @endif"><i class="fa fa-bank fa-fw"></i>  Kategoriler</a>
+        <a href="/admin/kullanicilar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "kullanicilar") w3-blue @endif"><i class="fa fa-users fa-fw"></i>  Kullanıcılar</a>
+        <a href="/admin/mesajlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "mesajlar") w3-blue @endif"><i class="fa fa-envelope fa-fw"></i>  Mesajlar</a> 
+        <a href="/admin/ayarlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "ayarlar") w3-blue @endif"><i class="fa fa-cog fa-fw"></i>  Ayarlar</a><br><br>
       </div>
     </nav>
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>

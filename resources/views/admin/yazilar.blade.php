@@ -13,6 +13,9 @@
             </select>
         </div>
     </header> 
+    @if(Request::url() === 'your url here')
+        // code
+    @endif 
     <table class="w3-table-all">
         <tr>
           <th>#</th>
