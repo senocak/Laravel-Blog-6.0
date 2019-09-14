@@ -13,4 +13,5 @@ Route::get('/profil/email_onayla/{token}', 'HomeController@email_onayla_get')->n
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     Route::get('/', 'Admin\YaziController@index')->name('admin.index');
     Route::get('/yazilar', 'Admin\YaziController@yazilar_index')->name('admin.yazilar.index');
+    Route::get('/yazilar/limit/{limit?}', 'Admin\YaziController@yazilar_limit')->name('admin.yazilar.index.limit');
 });

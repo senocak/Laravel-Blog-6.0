@@ -1,6 +1,5 @@
 @extends('main')
-@section('stylesheet')
-    {!! Html::script('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!} 
+@section('stylesheet') 
     <script type="text/javascript">
 		function showimagepreview(input) {
 			if (input.files && input.files[0]) {

@@ -1,6 +1,18 @@
 @extends('admin.main')
 @section('body')
-    <header class="w3-container" style="padding-top:22px"><h5><b><i class="fa fa-dashboard"></i> Yazılar</b></h5></header>
+    <header class="w3-container w3-row-padding" style="padding-top:22px">
+        <div class="w3-third"><h5><b><i class="fa fa-dashboard"></i> Yazılar</b></h5></div> 
+        <div class="w3-third w3-right">
+            <select class="w3-select kayıt_goster" name="limit" onchange="this.options[this.selectedIndex].value && (window.location = '/admin/yazilar/limit/'+this.options[this.selectedIndex].value);">
+                <option value="" disabled selected>Kayıt Göster</option>
+                <option value="10" @if ($dizi["limit"] == "10") selected @endif>10</option>
+                <option value="20" @if ($dizi["limit"] == "20") selected @endif>20</option>
+                <option value="30" @if ($dizi["limit"] == "30") selected @endif>30</option>
+                <option value="50" @if ($dizi["limit"] == "50") selected @endif>50</option>
+                <option value="100" @if ($dizi["limit"] == "100") selected @endif>100</option>
+            </select>
+        </div>
+    </header> 
     <table class="w3-table-all">
         <tr>
           <th>#</th>
@@ -30,4 +42,5 @@
             <tr>Kayıt Yok</tr>
         @endforelse 
       </table>
+      {{ $dizi["yazilar"]->links("posts_page")}}
 @endsection

@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <style>html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}</style>
+      {!! Html::script('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!} 
   </head>
   <body class="w3-light-grey">
     <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">

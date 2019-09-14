@@ -12,6 +12,7 @@
         {!! Html::script('js/prism.js') !!}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>img{max-width:100%;max-height:100%;}</style>
+        {!! Html::script('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!} 
         @yield('stylesheet')
     </head>
     <body class="w3-light-grey">
@@ -63,7 +64,7 @@
                                     <div class="w3-cell">
                                         <a class="w3-btn w3-green w3-ripple w3-block" href="/profil">Profil</a>
                                     </div>
-                                    @if (Auth::user()->is_admin == 1)
+                                    @if (Auth::user()->is_admin == 1 || Auth::user()->email_verified_at != null)
                                         <div class="w3-cell">
                                             <a class="w3-btn w3-black w3-ripple w3-block" href="/admin">Admin Paneli</a>
                                         </div>
