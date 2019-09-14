@@ -28,6 +28,12 @@ class YaziController extends Controller{
         return view("admin.index", ["dizi" => $this->dizi]);
     }
     public function yazilar_index(){
-        return view("admin.yazilar");
+        if (Auth::user()->is_admin == 1) {
+            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->get();
+        } else {
+            $this->dizi["yazilar"] = Yazi::whereHas('yorum', function($query) {$query->where("user_id",Auth::user()->id);})->with(['yorum' => function ($query){ $query->where("user_id",Auth::user()->id); }])->with("kategori")->with("user")->get();
+        }
+        
+        return view("admin.yazilar",["dizi" => $this->dizi]);
     }
 }
