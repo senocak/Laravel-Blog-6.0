@@ -12,4 +12,5 @@ Route::get('/profil/email_onayla/{token}', 'HomeController@email_onayla_get')->n
 //Admin Paneli
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     Route::get('/', 'Admin\YaziController@index')->name('admin.index');
+    Route::get('/yazilar', 'Admin\YaziController@yazilar_index')->name('admin.yazilar.index');
 });

@@ -1,10 +1,15 @@
 <?php
 namespace App\Http\Controllers\Admin; 
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
+use App\Kategori;
+use App\User;
+use App\Yazi;
+use App\Yorum;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class YaziController extends Controller{
+    private $dizi = [];
     public function __construct(){ 
         $this->middleware(function ($request, $next) {  
             if (Auth::user()->is_admin == 0) {
@@ -12,9 +17,17 @@ class YaziController extends Controller{
                 abort(404);
             }
             return $next($request);
-        });   
+        });
     }
     public function index(){
-        return view("admin.index");
+        $this->dizi["toplam_yazilar"]=count(Yazi::all());
+        $this->dizi["toplam_kategoriler"]=count(Kategori::all());
+        $this->dizi["toplam_kullanıcılar"]=count(User::all());
+        $this->dizi["toplam_yorumlar"]=count(Yorum::whereOnay(1)->get());
+        $this->dizi["onaysız_yorumlar"] = Yazi::whereHas('yorum', function($query) {$query->whereOnay(0);})->with(['yorum' => function ($query){ $query->whereOnay(0); }])->with("kategori")->with("user")->get();
+        return view("admin.index", ["dizi" => $this->dizi]);
+    }
+    public function yazilar_index(){
+        return view("admin.yazilar");
     }
 }
