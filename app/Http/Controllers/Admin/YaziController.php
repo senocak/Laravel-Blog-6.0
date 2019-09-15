@@ -20,8 +20,7 @@ class YaziController extends Controller{
             }
             return $next($request);
         });
-        $this->dizi["limit"]=10;
-        $this->dizi["orderBy"]="desc";
+        $this->dizi["limit"]=10; 
     }
     public function index(){
         $this->dizi["toplam_yazilar"]=count(Yazi::all());
@@ -33,18 +32,18 @@ class YaziController extends Controller{
     }
     public function yazilar_index(){
         if (Auth::user()->is_admin == 1) {
-            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->orderBy("created_at",$this->dizi["orderBy"])->paginate($this->dizi["limit"]);
+            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->orderBy("sira","asc")->paginate($this->dizi["limit"]);
         } else { 
-            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->orderBy("created_at",$this->dizi["orderBy"])->paginate($this->dizi["limit"]);
+            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->orderBy("sira","asc")->paginate($this->dizi["limit"]);
         } 
         return view("admin.yazilar",["dizi" => $this->dizi]);
     }
     public function yazilar_limit($limit = null){
         if ($limit == null || !is_numeric($limit)) $limit = $this->dizi["limit"]; 
         if (Auth::user()->is_admin == 1) {
-            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("created_at",$this->dizi["orderBy"])->paginate($limit);
+            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("sira","asc")->paginate($limit);
         } else { 
-            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("created_at",$this->dizi["orderBy"])->paginate($limit);
+            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("sira","asc")->paginate($limit);
         }
         $this->dizi["limit"]=$limit;
         return view("admin.yazilar",["dizi" => $this->dizi]);
@@ -111,6 +110,16 @@ class YaziController extends Controller{
         $yazi->user_id = Auth::user()->id;
         $yazi->save();
         return redirect()->route("admin.yazilar.index");
+    }
+    public function yazilar_sirala(Request $request){  
+        foreach ($request->item as $key => $value) {
+            //$post=Yazi::where("id",$value); 
+            $post = Yazi::whereId($value)->firstOrFail();
+            $post->sira=($key+1);
+            $post->save();
+        }
+        Session::flash('basarı', 'Yazılar Sıralandı.');
+        return array( 'islemSonuc' => true , 'islemMsj' => 'İçeriklerin sırala işlemi güncellendi' );
     }
     public function self_url($title){
         $search = array(" ","ö","ü","ı","ğ","ç","ş","/","?","&","'",",","A","B","C","Ç","D","E","F","G","Ğ","H","I","İ","J","K","L","M","N","O","Ö","P","R","S","Ş","T","U","Ü","V","Y","Z","Q","X");

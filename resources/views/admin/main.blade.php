@@ -9,6 +9,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <style>html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}</style>
       {!! Html::script('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!} 
+      {!! Html::script('https://code.jquery.com/ui/1.12.1/jquery-ui.js') !!}
       @yield('stylesheet')
   </head>
   <body class="w3-light-grey">
@@ -20,7 +21,7 @@
               <button type="submit" class="w3-btn w3-red w3-ripple w3-block w3-small" href="{{ route('logout') }}" >Çıkış Yap</button>
           </form> 
       </span>
-      <span class="w3-bar-item w3-left">Admin Paneli</span>
+      <span class="w3-bar-item w3-left"><a href="{{ url("/") }}" style="text-decoration: none" target="_blank">Admin Paneli</a></span>
     </div>
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:235px;" id="mySidebar"><br>
       <div class="w3-container w3-row">

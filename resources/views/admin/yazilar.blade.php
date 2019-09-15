@@ -1,4 +1,7 @@
 @extends('admin.main')
+@section('stylesheet') 
+    <style type="text/css">.sortable { cursor: grab; }</style>
+@endsection
 @section('body')
     <header class="w3-container w3-row-padding" style="padding-top:22px">
         <div class="w3-third"><h5><b><i class="fa fa-dashboard"></i> Yazılar</b></h5></div> 
@@ -17,35 +20,66 @@
     @if(Session::has('basarı'))<span class="w3-tag w3-round w3-green w3-block" style="padding:3px"><span class="w3-tag w3-round w3-green w3-border w3-border-white  w3-block">{{ Session::get('basarı') }}</span></span>@endif
     <a href="/admin/yazilar/ekle" class="w3-btn w3-black w3-block">Yazı Ekle</a>
     <table class="w3-table-all">
-        <tr>
-          <th>#</th>
-          <th>Başlık</th>
-          <th>Kategori</th>
-          <th>Yorum</th>
-          <th>Yazar</th>
-          <th>İşlemler</th>
-        </tr>
-        @php($sira = 1)
-        @forelse ($dizi["yazilar"] as $item)
+        <thead class="thead-dark">
             <tr>
-                <td>{{$sira}}</td>
-                <td>{{$item->baslik}}</td>
-                <td>
-                    <a href="/admin/kategoriler/{{$item->kategori->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{$item->kategori->baslik}}</a>
-                </td>
-                <td>
-                    <a href="/admin/yorumlar/yazi/{{$item->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{count($item->yorum)}} Yorum</a>
-                </td>
-                <td>{{$item->user->name}}</td>
-                <td>
-                    <a href="/admin/yazilar/duzenle/{{$item->id}}" title="Düzenle"><i class="fa fa-edit"></i></a>
-                    <a href="/admin/yazilar/sil/{{$item->id}}" title="Sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?!')"><i class="fa fa-minus-circle"></i></a>
-                </td>
+                <th>#</th>
+                <th>Başlık</th>
+                <th>Kategori</th>
+                <th>Yorum</th>
+                <th>Yazar</th>
+                <th>İşlemler</th>
             </tr>
-            @php($sira++)
-        @empty
-            <tr>Kayıt Yok</tr>
-        @endforelse 
+        </thead>
+        <tbody id="sortable">
+            @php($sira = 1)
+            @forelse ($dizi["yazilar"] as $item)
+                <tr id="item-{{ $item->id }}">
+                    <td class="sortable">{{$sira}}</td>
+                    <td>{{$item->baslik}}</td>
+                    <td>
+                        <a href="/admin/kategoriler/{{$item->kategori->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{$item->kategori->baslik}}</a>
+                    </td>
+                    <td>
+                        <a href="/admin/yorumlar/yazi/{{$item->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{count($item->yorum)}} Yorum</a>
+                    </td>
+                    <td>{{$item->user->name}}</td>
+                    <td>
+                        <a href="/admin/yazilar/duzenle/{{$item->id}}" title="Düzenle"><i class="fa fa-edit"></i></a>
+                        <a href="/admin/yazilar/sil/{{$item->id}}" title="Sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?!')"><i class="fa fa-minus-circle"></i></a>
+                        <a href="/admin/yazilar/aktif/{{$item->id}}" title="Aktif/Pasif"><i class="@if($item->aktif == 1)fa fa-thumbs-up @else fa fa-thumbs-down @endif"></i></a>
+                    </td>
+                </tr>
+                @php($sira++)
+            @empty
+                <tr>Kayıt Yok</tr>
+            @endforelse 
+        </tbody>
     </table>
     {{ $dizi["yazilar"]->links("posts_page")}}
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    var x = document.getElementById("alert");
+    $(function() {
+        $( "#sortable" ).sortable({
+            revert: true,
+            handle: ".sortable",
+            stop: function (event, ui) {
+                var data = $(this).sortable('serialize');
+                console.log(data);
+                $.ajax({
+                    headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    url: '{{route("admin.yazilar.sirala")}}',
+                    success: function(msg){
+                        location.reload();
+                    }
+                });
+            }
+        });
+        $( "#sortable" ).disableSelection();
+    });
+</script>
 @endsection
