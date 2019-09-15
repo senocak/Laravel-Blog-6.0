@@ -16,4 +16,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     Route::get('/yazilar/limit/{limit?}', 'Admin\YaziController@yazilar_limit')->name('admin.yazilar.index.limit');
     Route::get('/yazilar/duzenle/{id}', 'Admin\YaziController@yazilar_duzenle')->name('admin.yazilar.duzenle');
     Route::post('/yazilar/duzenle/{id}', 'Admin\YaziController@yazilar_duzenle_post')->name('admin.yazilar.duzenle.post');
+    Route::get('/yazilar/sil/{id}', 'Admin\YaziController@yazilar_sil')->name('admin.yazilar.sil');
+    Route::get('/yazilar/ekle', 'Admin\YaziController@yazilar_ekle')->name('admin.yazilar.ekle');
+    Route::post('/yazilar/ekle', 'Admin\YaziController@yazilar_ekle_post')->name('admin.yazilar.ekle.post');
+
+    
 });

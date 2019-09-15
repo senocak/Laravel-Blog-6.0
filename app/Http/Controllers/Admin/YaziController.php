@@ -8,7 +8,7 @@ use App\Yorum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Support\Facades\Session;
 class YaziController extends Controller{
     private $dizi = [];
     public function __construct(){ 
@@ -21,6 +21,7 @@ class YaziController extends Controller{
             return $next($request);
         });
         $this->dizi["limit"]=10;
+        $this->dizi["orderBy"]="desc";
     }
     public function index(){
         $this->dizi["toplam_yazilar"]=count(Yazi::all());
@@ -32,27 +33,31 @@ class YaziController extends Controller{
     }
     public function yazilar_index(){
         if (Auth::user()->is_admin == 1) {
-            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->orderBy("created_at","asc")->paginate($this->dizi["limit"]);
+            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->orderBy("created_at",$this->dizi["orderBy"])->paginate($this->dizi["limit"]);
         } else { 
-            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->orderBy("created_at","asc")->paginate($this->dizi["limit"]);
+            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->orderBy("created_at",$this->dizi["orderBy"])->paginate($this->dizi["limit"]);
         } 
         return view("admin.yazilar",["dizi" => $this->dizi]);
     }
     public function yazilar_limit($limit = null){
-        if ($limit == null) $limit = $this->dizi["limit"]; 
+        if ($limit == null || !is_numeric($limit)) $limit = $this->dizi["limit"]; 
         if (Auth::user()->is_admin == 1) {
-            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("created_at","asc")->paginate($limit);
+            $this->dizi["yazilar"] = Yazi::with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("created_at",$this->dizi["orderBy"])->paginate($limit);
         } else { 
-            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("created_at","asc")->paginate($limit);
+            $this->dizi["yazilar"] = Yazi::where("user_id",Auth::user()->id)->with('yorum')->with("kategori")->with("user")->skip(0)->limit($limit)->orderBy("created_at",$this->dizi["orderBy"])->paginate($limit);
         }
         $this->dizi["limit"]=$limit;
         return view("admin.yazilar",["dizi" => $this->dizi]);
     }
     public function yazilar_duzenle($id){
         $this->dizi["yazi"] = Yazi::findOrFail($id);
-        $user_id = Auth::user()->id;
-        if ($user_id != $this->dizi["yazi"]->user_id) {
-            return redirect()->route("admin.yazilar.index");
+        $user_id = Auth::user()->id; 
+        if (Auth::user()->is_admin != 1) {
+            if ($user_id != $this->dizi["yazi"]->user_id){
+                return redirect()->route("admin.yazilar.index");
+            }
+        }else{
+            $this->dizi["kullanıcılar"] = User::pluck('name', 'id'); 
         }
         $this->dizi["kategoriler_select"] = Kategori::pluck('baslik', 'id'); 
         return view("admin.yazilar_duznle",["dizi" => $this->dizi]);
@@ -62,19 +67,47 @@ class YaziController extends Controller{
             'baslik' => 'required|max:255',
             'icerik' => 'required',
             'kategori_id' => 'required',
-        ]);
-        $baslik = $request->baslik;
-        $icerik = $request->icerik;
-        $kategori_id = $request->kategori_id;
-        $etiketler = $request->etiketler; 
-        $aktif = $request->aktif ? "1" : "0"; 
+        ]);    
         $yazi = Yazi::findOrFail($id);
-        $yazi->baslik = $baslik;
-        $yazi->icerik = $icerik;
-        $yazi->kategori_id = $kategori_id;
-        $yazi->etiketler = $etiketler;
-        $yazi->aktif = $aktif;
-        $yazi->url = $this->self_url($baslik);
+        $yazi->baslik = $request->baslik;
+        $yazi->icerik = $request->icerik;
+        $yazi->kategori_id = $request->kategori_id;
+        $yazi->etiketler = $request->etiketler;
+        $yazi->aktif = $request->aktif ? "1" : "0";
+        $yazi->url = $this->self_url($request->baslik); 
+        if (Auth::user()->is_admin == 1) {
+            $yazi->user_id = $request->user_id;
+        }
+        $yazi->save();
+        return redirect()->route("admin.yazilar.index");
+    }
+    public function yazilar_sil($id){
+        $yazi = Yazi::findOrFail($id);
+        if ($yazi->user_id == Auth::user()->id || Auth::user()->is_admin == 1) {
+            $yazi->delete();
+            Session::flash('basarı', 'Yazı Silindi.');
+        }else{
+            Session::flash('hata', 'Yetkisiz Kullanıcı');
+        }
+        return redirect()->route("admin.yazilar.index");
+    }
+    public function yazilar_ekle(){
+        $this->dizi["kategoriler_select"] = Kategori::pluck('baslik', 'id'); 
+        return view("admin.yazilar_ekle",["dizi" => $this->dizi]); 
+    }
+    public function yazilar_ekle_post(Request $request){
+        $request->validate([
+            'baslik' => 'required|max:255',
+            'icerik' => 'required',
+            'kategori_id' => 'required',
+        ]);    
+        $yazi = new Yazi;
+        $yazi->baslik = $request->baslik;
+        $yazi->icerik = $request->icerik;
+        $yazi->kategori_id = $request->kategori_id;
+        $yazi->etiketler = $request->etiketler;
+        $yazi->aktif = $request->aktif ? "1" : "0";
+        $yazi->url = $this->self_url($request->baslik); 
         $yazi->user_id = Auth::user()->id;
         $yazi->save();
         return redirect()->route("admin.yazilar.index");

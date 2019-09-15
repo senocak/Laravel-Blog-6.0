@@ -13,9 +13,9 @@
             </select>
         </div>
     </header> 
-    @if(Request::url() === 'your url here')
-        // code
-    @endif 
+    @if(Session::has('hata'))<span class="w3-tag w3-round w3-red w3-block" style="padding:3px"><span class="w3-tag w3-round w3-red w3-border w3-border-white  w3-block">{{ Session::get('hata') }}</span></span>@endif
+    @if(Session::has('basarı'))<span class="w3-tag w3-round w3-green w3-block" style="padding:3px"><span class="w3-tag w3-round w3-green w3-border w3-border-white  w3-block">{{ Session::get('basarı') }}</span></span>@endif
+    <a href="/admin/yazilar/ekle" class="w3-btn w3-black w3-block">Yazı Ekle</a>
     <table class="w3-table-all">
         <tr>
           <th>#</th>
@@ -33,17 +33,19 @@
                 <td>
                     <a href="/admin/kategoriler/{{$item->kategori->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{$item->kategori->baslik}}</a>
                 </td>
-                <td>{{count($item->yorum)}} Yorum</td>
+                <td>
+                    <a href="/admin/yorumlar/yazi/{{$item->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{count($item->yorum)}} Yorum</a>
+                </td>
                 <td>{{$item->user->name}}</td>
                 <td>
-                        <a href="/admin/yazilar/duzenle/{{$item->id}}" title="Düzenle"><i class="fa fa-edit"></i></a>
-                        <a href="/admin/yazilar/duzenle/{{$item->id}}" title="Sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?!')"><i class="fa fa-minus-circle"></i></a>
+                    <a href="/admin/yazilar/duzenle/{{$item->id}}" title="Düzenle"><i class="fa fa-edit"></i></a>
+                    <a href="/admin/yazilar/sil/{{$item->id}}" title="Sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?!')"><i class="fa fa-minus-circle"></i></a>
                 </td>
             </tr>
             @php($sira++)
         @empty
             <tr>Kayıt Yok</tr>
         @endforelse 
-      </table>
-      {{ $dizi["yazilar"]->links("posts_page")}}
+    </table>
+    {{ $dizi["yazilar"]->links("posts_page")}}
 @endsection
