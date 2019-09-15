@@ -36,8 +36,8 @@
                 <td>{{count($item->yorum)}} Yorum</td>
                 <td>{{$item->user->name}}</td>
                 <td>
-                        <a href="/admin/yazi/duzenle/{{$item->baslik}}" title="Düzenle"><i class="fa fa-edit"></i></a>
-                        <a href="/admin/yazi/duzenle/{{$item->baslik}}" title="Sil"><i class="fa fa-minus-circle"></i></a>
+                        <a href="/admin/yazilar/duzenle/{{$item->id}}" title="Düzenle"><i class="fa fa-edit"></i></a>
+                        <a href="/admin/yazilar/duzenle/{{$item->id}}" title="Sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?!')"><i class="fa fa-minus-circle"></i></a>
                 </td>
             </tr>
             @php($sira++)

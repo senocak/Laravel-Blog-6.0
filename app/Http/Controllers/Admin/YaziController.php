@@ -5,6 +5,7 @@ use App\Kategori;
 use App\User;
 use App\Yazi;
 use App\Yorum;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -46,5 +47,42 @@ class YaziController extends Controller{
         }
         $this->dizi["limit"]=$limit;
         return view("admin.yazilar",["dizi" => $this->dizi]);
+    }
+    public function yazilar_duzenle($id){
+        $this->dizi["yazi"] = Yazi::findOrFail($id);
+        $user_id = Auth::user()->id;
+        if ($user_id != $this->dizi["yazi"]->user_id) {
+            return redirect()->route("admin.yazilar.index");
+        }
+        $this->dizi["kategoriler_select"] = Kategori::pluck('baslik', 'id'); 
+        return view("admin.yazilar_duznle",["dizi" => $this->dizi]);
+    }
+    public function yazilar_duzenle_post($id, Request $request){
+        $request->validate([
+            'baslik' => 'required|max:255',
+            'icerik' => 'required',
+            'kategori_id' => 'required',
+        ]);
+        $baslik = $request->baslik;
+        $icerik = $request->icerik;
+        $kategori_id = $request->kategori_id;
+        $etiketler = $request->etiketler; 
+        $aktif = $request->aktif ? "1" : "0"; 
+        $yazi = Yazi::findOrFail($id);
+        $yazi->baslik = $baslik;
+        $yazi->icerik = $icerik;
+        $yazi->kategori_id = $kategori_id;
+        $yazi->etiketler = $etiketler;
+        $yazi->aktif = $aktif;
+        $yazi->url = $this->self_url($baslik);
+        $yazi->user_id = Auth::user()->id;
+        $yazi->save();
+        return redirect()->route("admin.yazilar.index");
+    }
+    public function self_url($title){
+        $search = array(" ","ö","ü","ı","ğ","ç","ş","/","?","&","'",",","A","B","C","Ç","D","E","F","G","Ğ","H","I","İ","J","K","L","M","N","O","Ö","P","R","S","Ş","T","U","Ü","V","Y","Z","Q","X");
+        $replace = array("-","o","u","i","g","c","s","-","","-","","","a","b","c","c","d","e","f","g","g","h","i","i","j","k","l","m","n","o","o","p","r","s","s","t","u","u","v","y","z","q","x");
+        $new_text = str_replace($search,$replace,trim($title));
+        return $new_text;
     }
 }

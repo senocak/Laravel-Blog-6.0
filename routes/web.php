@@ -14,4 +14,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     Route::get('/', 'Admin\YaziController@index')->name('admin.index');
     Route::get('/yazilar', 'Admin\YaziController@yazilar_index')->name('admin.yazilar.index');
     Route::get('/yazilar/limit/{limit?}', 'Admin\YaziController@yazilar_limit')->name('admin.yazilar.index.limit');
+    Route::get('/yazilar/duzenle/{id}', 'Admin\YaziController@yazilar_duzenle')->name('admin.yazilar.duzenle');
+    Route::post('/yazilar/duzenle/{id}', 'Admin\YaziController@yazilar_duzenle_post')->name('admin.yazilar.duzenle.post');
 });
