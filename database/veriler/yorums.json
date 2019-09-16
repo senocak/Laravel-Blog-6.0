@@ -46,7 +46,6 @@
     },
     {
        "id":"6",
-       "email":"tbeier@senocak.tk",
        "yorum":"Dolore et sequi sit. At est rem et consequatur tempora. Magnam et est eum.",
        "yazi_id":"2",
        "onay":"1",
@@ -56,7 +55,6 @@
     },
     {
        "id":"7",
-       "email":"hattie.cummings@senocak.tk",
        "yorum":"Et qui illum odit voluptate fugiat. Aliquam tempore corrupti ut explicabo consequuntur enim. Voluptatibus molestias non qui occaecati rerum eaque. Ut ut quidem ad corrupti et ab aut autem.",
        "yazi_id":"1",
        "onay":"1",
@@ -66,7 +64,6 @@
     },
     {
        "id":"8",
-       "email":"alice11@senocak.tk",
        "yorum":"Voluptas cum ea qui qui id et. Praesentium reiciendis ab quo ullam eos dolores. Accusantium quia atque adipisci et voluptate. Placeat consequuntur placeat tenetur tempore aspernatur distinctio et est.",
        "yazi_id":"1",
        "onay":"1",
@@ -76,7 +73,6 @@
     },
     {
        "id":"9",
-       "email":"dock.hackett@senocak.tk",
        "yorum":"Cum nihil vero alias iure voluptatem reiciendis aut incidunt. Quo rerum molestias rerum cum ut eos itaque. Animi velit enim et voluptatum sunt.",
        "yazi_id":"6",
        "onay":"0",
@@ -86,10 +82,18 @@
     },
     {
        "id":"10",
-       "email":"ray.cassin@senocak.tk",
        "yorum":"Ea maiores eos repellat aut. Dicta aperiam qui ut voluptatem explicabo alias deleniti autem. Debitis molestias ut tenetur qui aperiam doloremque.",
        "yazi_id":"10",
        "onay":"0",
+       "created_at":"2019-07-26 19:28:33",
+       "updated_at":"2019-07-26 19:28:33",
+       "user_id":1
+    },
+    {
+       "id":"11",
+       "yorum":"Lorem Ipsum :smile Lorem Ipsum :smile Lorem Ipsum :sad",
+       "yazi_id":"16",
+       "onay":"1",
        "created_at":"2019-07-26 19:28:33",
        "updated_at":"2019-07-26 19:28:33",
        "user_id":1

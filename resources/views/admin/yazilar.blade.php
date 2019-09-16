@@ -5,27 +5,7 @@
 @section('body')
     <header class="w3-container w3-row-padding" style="padding-top:22px">
         <div class="w3-third"><h5><b><i class="fa fa-dashboard"></i> Yazılar</b></h5></div> 
-        <div class="w3-third"><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Aktif sayfada ara..." class="w3-input"></div> 
-        <script>
-            function myFunction() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("yazilar_table");
-                tr = table.getElementsByTagName("tr");
-                for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                    } else {
-                    tr[i].style.display = "none";
-                    }
-                }       
-                }
-            }
-        </script>
+        <div class="w3-third"><input type="text" id="myInput" onkeyup="search()" placeholder="Aktif sayfada ara..." class="w3-input"></div> 
         <div class="w3-third w3-right">
             <select class="w3-select kayıt_goster" name="limit" onchange="this.options[this.selectedIndex].value && (window.location = '/admin/yazilar/limit/'+this.options[this.selectedIndex].value);">
                 <option value="" disabled selected>Kayıt Göster</option>
@@ -79,28 +59,48 @@
     {{ $dizi["yazilar"]->links("posts_page")}}
 @endsection
 @section('scripts')
-<script type="text/javascript">
-    var x = document.getElementById("alert");
-    $(function() {
-        $( "#sortable" ).sortable({
-            revert: true,
-            handle: ".sortable",
-            stop: function (event, ui) {
-                var data = $(this).sortable('serialize');
-                console.log(data);
-                $.ajax({
-                    headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}"},
-                    type: "POST",
-                    dataType: "json",
-                    data: data,
-                    url: '{{route("admin.yazilar.sirala")}}',
-                    success: function(msg){
-                        location.reload();
-                    }
-                });
-            }
+    <script type="text/javascript">
+        var x = document.getElementById("alert");
+        $(function() {
+            $( "#sortable" ).sortable({
+                revert: true,
+                handle: ".sortable",
+                stop: function (event, ui) {
+                    var data = $(this).sortable('serialize');
+                    console.log(data);
+                    $.ajax({
+                        headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                        type: "POST",
+                        dataType: "json",
+                        data: data,
+                        url: '{{route("admin.yazilar.sirala")}}',
+                        success: function(msg){
+                            location.reload();
+                        }
+                    });
+                }
+            });
+            $( "#sortable" ).disableSelection();
         });
-        $( "#sortable" ).disableSelection();
-    });
-</script>
+    </script>
+    <script>
+        function search() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("yazilar_table");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
+        }
+    </script>   
 @endsection

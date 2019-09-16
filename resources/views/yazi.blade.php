@@ -6,6 +6,7 @@
             <div class="w3-display-bottomleft w3-container w3-button w3-padding-large w3-white"><a href="/yazar/{{$return_dizi["yazilar"]->user->username}}">{{$return_dizi["yazilar"]->user->name}}</a></div>
             <div class="w3-display-topleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/kategori/{{ $return_dizi["yazilar"]->url }}">{{$return_dizi["yazilar"]->kategori->baslik}}</a></div>
             <div class="w3-display-bottomright w3-container w3-button w3-padding-large w3-white"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($return_dizi["yazilar"]->created_at))->diffForHumans() ?></div> 
+            <div class="w3-display-topright w3-container w3-button w3-padding-large w3-white">👍</div> 
         </div>
         <div class="w3-container">
             <b style="font-size: xx-large">{{$return_dizi["yazilar"]->baslik}}</b>
@@ -33,13 +34,39 @@
         <form class="w3-container w3-card-4 w3-margin" method="POST">
             {{ csrf_field() }}
             <div class="w3-half">
-                <p><label class="w3-text-grey">İsim</label><input class="w3-input w3-border" type="text" required="" placeholder="İsminiz" name="isim" value="{{ Auth::user()->name }}" disabled></p>
+                <p>
+                    <label class="w3-text-grey">İsim</label><input class="w3-input w3-border" type="text" required="" placeholder="İsminiz" name="isim" value="{{ Auth::user()->name }}" disabled>
+                </p>
             </div>
             <div class="w3-half">
-                <p><label class="w3-text-grey">Email</label><input class="w3-input w3-border" type="email" required="" placeholder="Email Adresiniz" name="email" value="{{ Auth::user()->email }}" disabled></p>
+                <p>
+                    <label class="w3-text-grey">Email</label>
+                    <input class="w3-input w3-border" type="email" required="" placeholder="Email Adresiniz" name="email" value="{{ Auth::user()->email }}" disabled>
+                </p>
             </div>
-            <p><label class="w3-text-grey">Yorum</label><textarea class="w3-input w3-border" style="resize:none" placeholder="Yorumunuz" name="yorum"></textarea></p>
-            <p><button type="submit" class="w3-btn w3-padding w3-teal" style="width:120px">Göder &nbsp; ❯</button></p>
+            <p>
+                <label class="w3-text-grey">Yorum</label>
+                <a onclick="emoji('❤')">❤</a>
+                <a onclick="emoji('😊')">😊</a>
+                <a onclick="emoji('😔')">😔</a>
+                <a onclick="emoji('😀')">😀</a>
+                <a onclick="emoji('😍')">😍</a>
+                <a onclick="emoji('😐')">😐</a>
+                <a onclick="emoji('🤢')">🤢</a>
+                <a onclick="emoji('😡')">😡</a>
+                <a onclick="emoji('🔥')">🔥</a>
+                <a onclick="emoji('🤘')">🤘</a>
+                <textarea class="w3-input w3-border" style="resize:none" placeholder="Yorumunuz" name="yorum" id="yorum_textarea"></textarea>
+                <script>
+                    function emoji(e) {
+                        var textarea = document.getElementById("yorum_textarea");
+                        textarea.value = textarea.value+e;
+                    }
+                </script>
+            </p>
+            <p>
+                <button type="submit" class="w3-btn w3-padding w3-teal" style="width:120px">Gönder &nbsp; ❯</button>
+            </p>
         </form>
     @else
         <div class="w3-container w3-white w3-margin w3-center"><h2>Lütfen Giriş Yapınız</h2></div>
@@ -59,7 +86,9 @@
                     <?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?>
                 </span>
                 <br>
-                <div class="w3-bar-item" style="text-align: justify; width: 90%;"><span>{{$yorum->yorum}}</span></div>
+                @php($search = array(":smile",":sad"))
+                @php($replace = array("😊","😔"))
+                <div class="w3-bar-item" style="text-align: justify; width: 90%;"><span>{{ str_replace($search,$replace,trim($yorum->yorum)) }}</span></div>
             </li> 
         @endforeach
     </ul>
