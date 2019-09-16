@@ -28,7 +28,10 @@
           <img src="/images/{{ Auth::user()->picture }}" class=" w3-margin-right" style="width:70px">
         </div>
         <div class="w3-col s8 w3-bar"> 
-          <span style="padding-left: 15px;"><strong>{{ Auth::user()->name }}</strong></span><br><br>
+          <span style="padding-left: 15px;"><strong>{{ Auth::user()->name }}</strong></span>
+          <br>
+          @if(Auth::user()->is_admin ==1)<span style="padding-left: 15px;">Sistem Admin</span>@endif
+          <br>
           <a href="/admin/mesaj" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
           <a href="/admin/profil" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
           <a href="/admin/ayarlar" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>

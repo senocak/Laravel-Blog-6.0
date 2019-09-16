@@ -5,6 +5,27 @@
 @section('body')
     <header class="w3-container w3-row-padding" style="padding-top:22px">
         <div class="w3-third"><h5><b><i class="fa fa-dashboard"></i> Yazılar</b></h5></div> 
+        <div class="w3-third"><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Aktif sayfada ara..." class="w3-input"></div> 
+        <script>
+            function myFunction() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("yazilar_table");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    } else {
+                    tr[i].style.display = "none";
+                    }
+                }       
+                }
+            }
+        </script>
         <div class="w3-third w3-right">
             <select class="w3-select kayıt_goster" name="limit" onchange="this.options[this.selectedIndex].value && (window.location = '/admin/yazilar/limit/'+this.options[this.selectedIndex].value);">
                 <option value="" disabled selected>Kayıt Göster</option>
@@ -19,7 +40,7 @@
     @if(Session::has('hata'))<span class="w3-tag w3-round w3-red w3-block" style="padding:3px"><span class="w3-tag w3-round w3-red w3-border w3-border-white  w3-block">{{ Session::get('hata') }}</span></span>@endif
     @if(Session::has('basarı'))<span class="w3-tag w3-round w3-green w3-block" style="padding:3px"><span class="w3-tag w3-round w3-green w3-border w3-border-white  w3-block">{{ Session::get('basarı') }}</span></span>@endif
     <a href="/admin/yazilar/ekle" class="w3-btn w3-black w3-block">Yazı Ekle</a>
-    <table class="w3-table-all">
+    <table class="w3-table-all" id="yazilar_table">
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
