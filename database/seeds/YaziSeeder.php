@@ -14,7 +14,8 @@ class YaziSeeder extends Seeder{
             'user_id' => $obj->user_id,
             'etiketler' => $obj->etiketler,
             'aktif' => $obj->aktif,
-            'icerik' => $obj->icerik
+            'icerik' => $obj->icerik,
+            'sira' => $obj->sira
           ));
         }
     }

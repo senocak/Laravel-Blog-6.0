@@ -8,9 +8,9 @@
       "user_id":"2",
       "etiketler":"php,laravel,mvc",
       "aktif":"1",
-      "sira":"15",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:40:46"
+      "sira":"16",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:28"
    },
    {
       "id":"2",
@@ -21,9 +21,9 @@
       "user_id":"2",
       "etiketler":"mvc,oop",
       "aktif":"1",
-      "sira":"16",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:40:46"
+      "sira":"15",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:34"
    },
    {
       "id":"3",
@@ -35,8 +35,8 @@
       "etiketler":"laravel,php,mvc,composer,framework",
       "aktif":"1",
       "sira":"14",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:05"
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:37"
    },
    {
       "id":"4",
@@ -48,8 +48,8 @@
       "etiketler":"laravel,php,mvc,composer,framework",
       "aktif":"1",
       "sira":"13",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:11"
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:41"
    },
    {
       "id":"5",
@@ -60,9 +60,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,mvc,framework,config",
       "aktif":"1",
-      "sira":"11",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:15"
+      "sira":"12",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:44"
    },
    {
       "id":"6",
@@ -73,9 +73,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,mvc,framework,routes,routing",
       "aktif":"1",
-      "sira":"10",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:19"
+      "sira":"11",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:47"
    },
    {
       "id":"7",
@@ -86,9 +86,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,mvc,controller,framework",
       "aktif":"1",
-      "sira":"9",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:22"
+      "sira":"10",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:51"
    },
    {
       "id":"8",
@@ -99,9 +99,9 @@
       "user_id":"1",
       "etiketler":"mvc,oop",
       "aktif":"1",
-      "sira":"8",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:26"
+      "sira":"9",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:54"
    },
    {
       "id":"9",
@@ -112,9 +112,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,mvc,composer,framework,oop,blade",
       "aktif":"1",
-      "sira":"7",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:29"
+      "sira":"8",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:57"
    },
    {
       "id":"10",
@@ -125,9 +125,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,mvc,composer,framework,oop,model",
       "aktif":"1",
-      "sira":"6",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:35"
+      "sira":"7",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:59"
    },
    {
       "id":"11",
@@ -138,9 +138,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,sql,mvc,oop,framework",
       "aktif":"1",
-      "sira":"5",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:38"
+      "sira":"6",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:12:10"
    },
    {
       "id":"12",
@@ -151,9 +151,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,mvc,oop,sql,query-builder",
       "aktif":"1",
-      "sira":"4",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:42"
+      "sira":"5",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:12:10"
    },
    {
       "id":"13",
@@ -164,9 +164,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,crud,mvc,oop,framework",
       "aktif":"1",
-      "sira":"1",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:42"
+      "sira":"2",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:12:12"
    },
    {
       "id":"14",
@@ -177,9 +177,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,mvc,oop,framework",
       "aktif":"1",
-      "sira":"3",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:49"
+      "sira":"4",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:12:10"
    },
    {
       "id":"15",
@@ -190,9 +190,9 @@
       "user_id":"1",
       "etiketler":"laravel,php,mvc,oop,relation,sql,db",
       "aktif":"1",
-      "sira":"2",
-      "created_at":"2019-09-16 09:32:15",
-      "updated_at":"2019-09-16 12:41:49"
+      "sira":"3",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:12:12"
    },
    {
       "id":"16",
@@ -203,8 +203,8 @@
       "user_id":"2",
       "etiketler":"php,php6",
       "aktif":"1",
-      "sira":"12",
-      "created_at":"2019-09-16 12:23:08",
-      "updated_at":"2019-09-16 12:41:11"
+      "sira":"1",
+      "created_at":"2019-09-16 13:11:15",
+      "updated_at":"2019-09-16 13:11:31"
    }
 ]

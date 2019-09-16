@@ -13,7 +13,7 @@
                 <div class="w3-display-bottomright w3-container w3-button w3-padding-large w3-white"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yazi->created_at))->diffForHumans() ?></div> 
             </div>
             <div class="w3-container">
-                <b style="font-size: x-large"><a style="text-decoration: none;" href="/yazi/{{ $yazi->url }}">{{$yazi->baslik}}</a></b>
+                <b style="font-size: large"><a style="text-decoration: none;" href="/yazi/{{ $yazi->url }}">{{$yazi->baslik}}</a></b>
                 <b class="w3-right"><b>Yorumlar </b><span class="w3-badge">{{count($yazi->yorum)}}</span></b>
             </div>
             <div class="w3-container">
