@@ -16,7 +16,8 @@ class UserSeeder extends Seeder{
             'created_at' => $obj->created_at,
             'updated_at' => $obj->updated_at,
             "is_admin"=>$obj->is_admin,
-            "picture"=>$obj->picture
+            "picture"=>$obj->picture,
+            "username"=>$obj->username
           ));
         }
     }

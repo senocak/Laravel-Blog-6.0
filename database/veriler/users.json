@@ -2,6 +2,7 @@
     {
        "id":"1",
        "name":"Zakk Wylde",
+       "username":"zakkwylde",
        "email":"zakk@wylde.com", 
        "password":"$2y$10$.fxjHsp/Ke1WD.TybccfUex1./EYAWEZYLkz3lPRauUb.PPm4dw0u",
        "remember_token":null,
@@ -14,6 +15,7 @@
     {
        "id":"2",
        "name":"Dimebag Darrel",
+       "username":"dimebagdarrel",
        "email":"dime@darrel.com", 
        "password":"$2y$10$T4ZpfmoKJOuy0t/wKrw79exmoYgGZFhFvLO8cxN4FVo6BNAaxemW.",
        "remember_token":null,
