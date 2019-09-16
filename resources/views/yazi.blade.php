@@ -3,7 +3,7 @@
     <div class="w3-card-4 w3-margin w3-white">
         <div class="w3-display-container">
             <img class="w3-center" src="/images/{{ $return_dizi["yazilar"]->kategori->resim }}" style="width:100%">
-            <div class="w3-display-bottomleft w3-container w3-button w3-padding-large w3-white">{{$return_dizi["yazilar"]->user->name}}</div>
+            <div class="w3-display-bottomleft w3-container w3-button w3-padding-large w3-white"><a href="/yazar/{{$return_dizi["yazilar"]->user->id}}">{{$return_dizi["yazilar"]->user->name}}</a></div>
             <div class="w3-display-topleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/kategori/{{ $return_dizi["yazilar"]->url }}">{{$return_dizi["yazilar"]->kategori->baslik}}</a></div>
             <div class="w3-display-bottomright w3-container w3-button w3-padding-large w3-white"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($return_dizi["yazilar"]->created_at))->diffForHumans() ?></div> 
         </div>
@@ -63,6 +63,11 @@
             </li> 
         @endforeach
     </ul>
+@endsection
+@section('kategoriler')
+    @foreach ($return_dizi["kategoriler"] as $kategori)
+        <a href="/kategori/{{ $kategori->url }}"><span class="w3-tag">{{ $kategori->baslik }}</span></a>
+    @endforeach
 @endsection
 @section('yorumlar')
     <ul class="w3-ul w3-card-4">
