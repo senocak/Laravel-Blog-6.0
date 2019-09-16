@@ -3,8 +3,8 @@
     <head>
         <title>@yield('title', 'Anıl Şenocak - Laravel6.0 Blog Template')</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        {!! Html::style('css/w3.css') !!}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <style>body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}</style>
         <link rel="shortcut icon" href="https://laravel.com/img/logomark.min.svg" type="image/x-icon">
@@ -57,7 +57,7 @@
                                 @if (Auth::user()->is_admin == 1)
                                     <span class="w3-bar-item w3-right"><i class="fa fa-star" title="Admin Yetkili Kullanıcı"></i></span>
                                 @endif 
-                                <img src="/images/{{ Auth::user()->picture }}" class="w3-bar-item w3-circle w3-hide-small" style="width:80px">
+                                <img src="/images/{{ Auth::user()->picture }}" class="w3-bar-item w3-c ircle w3-hide-small" style="width:80px">
                                 <span class="w3-large w3-margin w3-center">{{ Auth::user()->name }}</span><br>
                                 <span class="w3-margin w3-center">{{ Auth::user()->email }}</span><br>
                                 <div class="w3-cell-row">
