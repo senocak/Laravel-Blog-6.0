@@ -20,6 +20,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     Route::get('/yazilar/ekle', 'Admin\YaziController@yazilar_ekle')->name('admin.yazilar.ekle');
     Route::post('/yazilar/ekle', 'Admin\YaziController@yazilar_ekle_post')->name('admin.yazilar.ekle.post');
     Route::post("/yazilar/sirala", "Admin\YaziController@yazilar_sirala")->name("admin.yazilar.sirala");
+    //Kategoriler
+    Route::get('/kategoriler', 'Admin\KategoriController@kategoriler_index')->name('admin.kategoriler.index');
+    Route::post("/kategoriler/sirala", "Admin\KategoriController@kategoriler_sirala")->name("admin.kategoriler.sirala");
+    //Kategoriler
 
     
 });
