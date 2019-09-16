@@ -3,9 +3,9 @@
     @php ($i=0)
     @foreach ($return_dizi["yazilar"] as $yazi)
         @if ($i%2 == 0)
-            <div class="w3-half ">
+            <div class="w3-half" style="padding-right: 5px;">
         @endif
-        <div class="w3-card-4 w3-margin w3-white">
+        <div class="w3-card-4 w3-margin w3-white  w3-col ">
             <div class="w3-display-container">
                 <a href="/yazi/{{ $yazi->url }}"><img class="w3-center" src="/images/{{ $yazi->kategori->resim }}" style="width:100%"></a>
                 <div class="w3-display-bottomleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/yazar/{{$yazi->user->username}}">{{$yazi->user->name}}</a></div>

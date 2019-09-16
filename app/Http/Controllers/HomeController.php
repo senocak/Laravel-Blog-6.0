@@ -38,8 +38,8 @@ class HomeController extends Controller{
         $this->return_dizi["yazilar"] = Yazi::whereKategori_id($kategori->id)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
         return view('index', ['return_dizi' => $this->return_dizi]);
     }
-    public function yazar($id=null){
-        $user = User::findOrFail($id);
+    public function yazar($username=null){
+        $user = User::whereUsername($username)->firstOrFail();
         $this->return_dizi["yazilar"] = Yazi::whereUser_id($user->id)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
         return view('index', ['return_dizi' => $this->return_dizi]);
     }
