@@ -86,8 +86,8 @@
                     <?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yorum->created_at))->diffForHumans() ?>
                 </span>
                 <br>
-                @php($search = array(":smile",":sad"))
-                @php($replace = array("😊","😔"))
+                @php($search = array(":smile",":sad",":heart",":hah",":love",":hmm",":gross",":angry",":fire",":rock"))
+                @php($replace = array("😊","😔","❤","😀","😍","😐","🤢","😡","🔥","🤘"))
                 <div class="w3-bar-item" style="text-align: justify; width: 90%;"><span>{{ str_replace($search,$replace,trim($yorum->yorum)) }}</span></div>
             </li> 
         @endforeach
