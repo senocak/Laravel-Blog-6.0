@@ -10,8 +10,7 @@
 		}
     </script>
     <style>
-        .alert-info{
-            
+        .alert-info{ 
         }
     </style>
 @endsection

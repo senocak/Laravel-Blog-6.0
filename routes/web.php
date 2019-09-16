@@ -23,7 +23,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     //Kategoriler
     Route::get('/kategoriler', 'Admin\KategoriController@kategoriler_index')->name('admin.kategoriler.index');
     Route::post("/kategoriler/sirala", "Admin\KategoriController@kategoriler_sirala")->name("admin.kategoriler.sirala");
-    //Kategoriler
-
+    Route::get('/kategoriler/ekle', 'Admin\KategoriController@kategoriler_ekle')->name('admin.kategoriler.ekle');
+    Route::post('/kategoriler/ekle', 'Admin\KategoriController@kategoriler_ekle_post')->name('admin.kategoriler.ekle.post');
+   
     
 });
