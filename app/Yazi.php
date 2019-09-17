@@ -14,4 +14,7 @@ class Yazi extends Model{
     public function yorum(){
         return $this->hasMany('App\Yorum');
     }
+    public function begeni(){
+        return $this->hasMany('App\Begeni');
+    }
 }

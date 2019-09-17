@@ -4,6 +4,7 @@ Route::get('/kategori/{url?}', 'HomeController@kategori')->name('kategori');
 Route::get('/yazar/{url?}', 'HomeController@yazar')->name('yazar');
 Route::get('/yazi/{url}', 'HomeController@yazi')->name('yazi');
 Route::post('/yazi/{url}', 'HomeController@yorum_ekle')->name('yorum_ekle'); 
+Route::get('/yazi/begen/{url}', "HomeController@yazilar_begen")->name("yazilar.begen");
 Auth::routes(['reset' => false, 'verify' => false]);
 Route::get('/profil', 'HomeController@profil')->name('profil')->middleware("auth");
 Route::post('/profil', 'HomeController@profil_guncelle')->name('profil_guncelle')->middleware("auth");

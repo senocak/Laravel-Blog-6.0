@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Begeni;
 use App\Kategori;
 use App\User;
 use App\Yazi;
@@ -44,7 +46,7 @@ class HomeController extends Controller{
         return view('index', ['return_dizi' => $this->return_dizi]);
     }
     public function yazi($url){
-        $this->return_dizi["yazilar"] = Yazi::whereUrl($url)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->firstOrFail();
+        $this->return_dizi["yazilar"] = Yazi::whereUrl($url)->whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->with("begeni")->orderBy("sira","asc")->firstOrFail();
         return view('yazi', ['return_dizi' => $this->return_dizi]);
     }
     public function yorum_ekle($url, Request $request){
@@ -121,8 +123,6 @@ class HomeController extends Controller{
             }else{
                 return response()->success('Great! Successfully send in your mail');
             }
-
-
         } else {
             return "0";
         }
@@ -135,6 +135,24 @@ class HomeController extends Controller{
             $user->save();
         }
         return redirect()->route("profil");
+    }
+    public function yazilar_begen($url){
+        $ip = \Request::getClientIp(true);
+        $yazi = Yazi::whereUrl($url)->first();
+        if ($yazi == "") {
+            return redirect()->route("index");
+        }
+        $begeni = Begeni::where([['yazi_id', '=', $yazi->id],['ip', '=', $ip]])->first();
+        if ($begeni == "") { 
+            $begeni = new Begeni;
+            $begeni->yazi_id = $yazi->id;
+            $begeni->ip = $ip;
+            $begeni->save();
+            Session::flash('basarı', 'Yazıyı Beğendiniz');
+        }else{
+            Session::flash('hata', 'Yazıyı Zaten Beğendiniz');
+        }
+        return redirect()->route("yazi", ["url"=>$url]);
     }
     public function self_url($title){
         $search = array(" ","ö","ü","ı","ğ","ç","ş","/","?","&","'",",","A","B","C","Ç","D","E","F","G","Ğ","H","I","İ","J","K","L","M","N","O","Ö","P","R","S","Ş","T","U","Ü","V","Y","Z","Q","X");

@@ -1,12 +1,16 @@
 @extends('main')
 @section('body') 
     <div class="w3-card-4 w3-margin w3-white">
+        @if(Session::has('hata'))<span class="w3-tag w3-round w3-red w3-block" style="padding:3px"><span class="w3-tag w3-round w3-red w3-border w3-border-white  w3-block">{{ Session::get('hata') }}</span></span>@endif
+        @if(Session::has('basarı'))<span class="w3-tag w3-round w3-green w3-block" style="padding:3px"><span class="w3-tag w3-round w3-green w3-border w3-border-white  w3-block">{{ Session::get('basarı') }}</span></span>@endif
         <div class="w3-display-container">
             <img class="w3-center" src="/images/{{ $return_dizi["yazilar"]->kategori->resim }}" style="width:100%">
             <div class="w3-display-bottomleft w3-container w3-button w3-padding-large w3-white"><a href="/yazar/{{$return_dizi["yazilar"]->user->username}}">{{$return_dizi["yazilar"]->user->name}}</a></div>
             <div class="w3-display-topleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/kategori/{{ $return_dizi["yazilar"]->url }}">{{$return_dizi["yazilar"]->kategori->baslik}}</a></div>
             <div class="w3-display-bottomright w3-container w3-button w3-padding-large w3-white"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($return_dizi["yazilar"]->created_at))->diffForHumans() ?></div> 
-            <div class="w3-display-topright w3-container w3-button w3-padding-large w3-white">👍</div> 
+            <a href="/yazi/begen/{{$return_dizi["yazilar"]->url}}">
+                <div class="w3-display-topright w3-container w3-button w3-padding-large w3-white">👍 {{ count($return_dizi["yazilar"]->begeni) }}</div> 
+            </a>
         </div>
         <div class="w3-container">
             <b style="font-size: xx-large">{{$return_dizi["yazilar"]->baslik}}</b>

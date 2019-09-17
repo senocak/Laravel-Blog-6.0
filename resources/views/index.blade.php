@@ -11,6 +11,7 @@
                 <div class="w3-display-bottomleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/yazar/{{$yazi->user->username}}">{{$yazi->user->name}}</a></div>
                 <div class="w3-display-topleft w3-container w3-button w3-padding-large w3-white"><a style="text-decoration: none;" href="/kategori/{{ $yazi->kategori->url }}">{{$yazi->kategori->baslik}}</a></div>
                 <div class="w3-display-bottomright w3-container w3-button w3-padding-large w3-white"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($yazi->created_at))->diffForHumans() ?></div> 
+                <div class="w3-display-topright w3-container w3-button w3-padding-large w3-white">👍 {{ count($yazi->begeni) }}</div> 
             </div>
             <div class="w3-container">
                 <b style="font-size: large"><a style="text-decoration: none;" href="/yazi/{{ $yazi->url }}">{{$yazi->baslik}}</a></b>
