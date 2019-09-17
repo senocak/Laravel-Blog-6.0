@@ -15,9 +15,11 @@ class KategoriController extends Controller{
     public function __construct(){ 
         $this->middleware(function ($request, $next) {  
             if (Auth::user()->email_verified_at == null) {
+                /*
                 //Auth::user()->is_admin != 1 && 
                 Redirect::to('/')->send();
                 abort(404);
+                */
             }
             return $next($request);
         });
@@ -37,9 +39,17 @@ class KategoriController extends Controller{
         return array( 'islemSonuc' => true , 'islemMsj' => 'İçeriklerin sırala işlemi güncellendi' );
     }
     public function kategoriler_ekle(){
+        if (Auth::user()->is_admin != 1) {
+            Session::flash('hata', 'Yetkisiz Kullanıcı');
+            return redirect()->route("admin.kategoriler.index");
+        }
         return view("admin.kategoriler_ekle", ["dizi" => $this->dizi]);
     }
     public function kategoriler_ekle_post(Request $request){
+        if (Auth::user()->is_admin != 1) {
+            Session::flash('hata', 'Yetkisiz Kullanıcı');
+            return redirect()->route("admin.kategoriler.index");
+        }
         $this->validate($request,array(
             'baslik' => 'required|max:255',
             'resim'  => 'required|image'
@@ -66,6 +76,10 @@ class KategoriController extends Controller{
         return $new_text;
     }
     public function kategoriler_duzenle($id){
+        if (Auth::user()->is_admin != 1) {
+            Session::flash('hata', 'Yetkisiz Kullanıcı');
+            return redirect()->route("admin.kategoriler.index");
+        }
         $this->dizi["kategori"]=Kategori::find($id);
         if ($this->dizi["kategori"] == "") {
             return redirect()->route("admin.kategoriler.index");
@@ -73,6 +87,10 @@ class KategoriController extends Controller{
         return view("admin.kategoriler_duzenle", ["dizi" => $this->dizi]);
     }
     public function kategoriler_duzenle_post($id, Request $request){
+        if (Auth::user()->is_admin != 1) {
+            Session::flash('hata', 'Yetkisiz Kullanıcı');
+            return redirect()->route("admin.kategoriler.index");
+        }
         $this->validate($request,array(
             'baslik' => 'required|max:255'
         ));
@@ -96,6 +114,10 @@ class KategoriController extends Controller{
         return redirect()->route("admin.kategoriler.index");
     }
     public function kategoriler_sil($id){
+        if (Auth::user()->is_admin != 1) {
+            Session::flash('hata', 'Yetkisiz Kullanıcı');
+            return redirect()->route("admin.kategoriler.index");
+        }
         $kategori=Kategori::find($id);
         if ($kategori == "") {
             Session::flash('hata', 'Kategori Bulunamadı');

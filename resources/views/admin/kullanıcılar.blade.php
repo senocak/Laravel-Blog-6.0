@@ -26,12 +26,13 @@
                     <td>{{count($item->yazi)}}</td> 
                     <td>{{count($item->yorum)}}</td> 
                     <td>
-                        <a onclick="document.getElementById('id_{{ $item->id }}').style.display='block'"  title="Düzenle"><i class="fa fa-edit"></i></a>
-                        @if($item->email_verified_at == null)
-                            <a href="/admin/kullanicilar/aktif/{{$item->id}}" title="Aktif et" onclick="return confirm('Aktif Etmek İstediğinize Emin Misiniz?!')"><i class="fa fa-thumbs-down" style="color:red"></i></a>
-                        @else
-                            <a href="/admin/kullanicilar/aktif/{{$item->id}}" title="Pasif et" onclick="return confirm('Pasif Etmek İstediğinize Emin Misiniz?!')"><i class="fa fa-thumbs-up"></i></a>
-                        @endif 
+                        @if (Auth::user()->is_admin == 1)
+                            @if($item->email_verified_at == null)
+                                <a href="/admin/kullanicilar/aktif/{{$item->id}}" title="Aktif et" onclick="return confirm('Aktif Etmek İstediğinize Emin Misiniz?!')"><i class="fa fa-thumbs-down" style="color:red"></i></a>
+                            @else
+                                <a href="/admin/kullanicilar/aktif/{{$item->id}}" title="Pasif et" onclick="return confirm('Pasif Etmek İstediğinize Emin Misiniz?!')"><i class="fa fa-thumbs-up"></i></a>
+                            @endif 
+                        @endif
                         @if ($item->is_admin == 1)
                             <i class="fa fa-star" title="Admin Yetkili Kullanıcı" style="color:green"></i>
                         @endif

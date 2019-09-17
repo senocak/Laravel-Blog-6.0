@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\Session;
 class YaziController extends Controller{
     private $dizi = [];
     public function __construct(){ 
-        $this->middleware(function ($request, $next) {  
-            if (Auth::user()->email_verified_at == null) {
+        $this->middleware(function ($request, $next){
+            if (Auth::user()->email_verified_at == null){
+                /*
                 //Auth::user()->is_admin != 1 && 
+                Session::flash('hata', 'Onaylanmamış Kullanıcı');
                 Redirect::to('/')->send();
                 abort(404);
+                */
             }
             return $next($request);
         });
@@ -48,25 +51,36 @@ class YaziController extends Controller{
         $this->dizi["limit"]=$limit;
         return view("admin.yazilar",["dizi" => $this->dizi]);
     }
-    public function yazilar_duzenle($id){
-        $this->dizi["yazi"] = Yazi::findOrFail($id);
-        $user_id = Auth::user()->id; 
+    public function check($id){
+        $yazi = Yazi::findOrFail($id);
         if (Auth::user()->is_admin != 1) {
-            if ($user_id != $this->dizi["yazi"]->user_id){
-                return redirect()->route("admin.yazilar.index");
+            if (Auth::user()->id != $yazi->user_id){ 
+                return 0;
+            }else{
+                return 1;
             }
-        }else{
-            $this->dizi["kullanıcılar"] = User::pluck('name', 'id'); 
         }
+    }
+    public function yazilar_duzenle($id){
+        if ($this->check($id) == 0) {
+            Session::flash('hata', 'Yetkisiz Kullanıcı');
+            return redirect()->route("admin.yazilar.index");
+        }
+        $this->dizi["yazi"] = Yazi::findOrFail($id);
+        $this->dizi["kullanıcılar"] = User::pluck('name', 'id'); 
         $this->dizi["kategoriler_select"] = Kategori::pluck('baslik', 'id'); 
         return view("admin.yazilar_duznle",["dizi" => $this->dizi]);
     }
     public function yazilar_duzenle_post($id, Request $request){
+        if ($this->check($id) == 0) {
+            Session::flash('hata', 'Yetkisiz Kullanıcı');
+            return redirect()->route("admin.yazilar.index");
+        }
         $request->validate([
             'baslik' => 'required|max:255',
             'icerik' => 'required',
             'kategori_id' => 'required',
-        ]);    
+        ]); 
         $yazi = Yazi::findOrFail($id);
         $yazi->baslik = $request->baslik;
         $yazi->icerik = $request->icerik;
@@ -80,14 +94,14 @@ class YaziController extends Controller{
         $yazi->save();
         return redirect()->route("admin.yazilar.index");
     }
-    public function yazilar_sil($id){
-        $yazi = Yazi::findOrFail($id);
-        if ($yazi->user_id == Auth::user()->id || Auth::user()->is_admin == 1) {
-            $yazi->delete();
-            Session::flash('basarı', 'Yazı Silindi.');
-        }else{
+    public function yazilar_sil($id){ 
+        if ($this->check($id) == 0) {
             Session::flash('hata', 'Yetkisiz Kullanıcı');
-        }
+            return redirect()->route("admin.yazilar.index");
+        } 
+        $yazi = Yazi::findOrFail($id);
+        $yazi->delete();
+        Session::flash('basarı', 'Yazı Silindi.'); 
         return redirect()->route("admin.yazilar.index");
     }
     public function yazilar_ekle(){

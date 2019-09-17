@@ -9,7 +9,9 @@
     </header>
     @if(Session::has('hata'))<span class="w3-tag w3-round w3-red w3-block" style="padding:3px"><span class="w3-tag w3-round w3-red w3-border w3-border-white  w3-block">{{ Session::get('hata') }}</span></span>@endif
     @if(Session::has('basarı'))<span class="w3-tag w3-round w3-green w3-block" style="padding:3px"><span class="w3-tag w3-round w3-green w3-border w3-border-white  w3-block">{{ Session::get('basarı') }}</span></span>@endif
-    <a href="/admin/kategoriler/ekle" class="w3-btn w3-black w3-block">Kategori Ekle</a>
+    @if (Auth::user()->is_admin == 1)        
+        <a href="/admin/kategoriler/ekle" class="w3-btn w3-black w3-block">Kategori Ekle</a>
+    @endif
     <table class="w3-table-all" id="yazilar_table">
         <thead class="thead-dark">
             <tr>
@@ -28,8 +30,12 @@
                         {{count($item->yazilar)}} Yazı
                     </td> 
                     <td>
-                        <a href="/admin/kategoriler/duzenle/{{$item->id}}" title="Düzenle"><i class="fa fa-edit"></i></a>
-                        <a href="/admin/kategoriler/sil/{{$item->id}}" title="Sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?!')"><i class="fa fa-minus-circle"></i></a>
+                        @if (Auth::user()->is_admin == 1)                            
+                            <a href="/admin/kategoriler/duzenle/{{$item->id}}" title="Düzenle"><i class="fa fa-edit"></i></a>
+                            <a href="/admin/kategoriler/sil/{{$item->id}}" title="Sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?!')"><i class="fa fa-minus-circle"></i></a>
+                        @else
+                            <a ><i class="fa fa-exclamation-triangle"></i> Yetkisiz Kullanıcı</a>
+                        @endif
                     </td>
                 </tr>
             @empty

@@ -20,7 +20,9 @@
             <header class="w3-container w3-center w3-padding-32"> 
                 <h1><b><a href="/" style="text-decoration: none">Anıl Şenocak</a></b></h1>
                 <p>@yield('kategoriler')</p>
-            </header>
+            </header> 
+            @if(Session::has('hata'))<span class="w3-tag w3-round w3-red w3-block" style="padding:3px"><span class="w3-tag w3-round w3-red w3-border w3-border-white  w3-block">{{ Session::get('hata') }}</span></span>@endif
+            @if(Session::has('basarı'))<span class="w3-tag w3-round w3-green w3-block" style="padding:3px"><span class="w3-tag w3-round w3-green w3-border w3-border-white  w3-block">{{ Session::get('basarı') }}</span></span>@endif
             <div class="w3-row">
                 <div class="w3-col l8 s12">
                     @yield('body')
