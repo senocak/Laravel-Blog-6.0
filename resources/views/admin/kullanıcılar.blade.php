@@ -21,7 +21,7 @@
             @forelse ($dizi["kullanıcılar"] as $item)
                 <tr id="item-{{ $item->id }}" @if($item->email_verified_at == null) style="text-decoration: line-through;" @endif> 
                     <td><img src="/images/{{$item->picture}}" width="100px"></td> 
-                    <td>{{$item->name}}<div class="w3-tiny">{{$item->username}}</div></td> 
+                    <td>{{$item->name}} @if ($item->is_admin == 1) <i class="fa fa-star" title="Admin Yetkili Kullanıcı" style="color:green"></i> @endif <div class="w3-tiny">{{$item->username}}</div></td> 
                     <td>{{$item->email}}</td> 
                     <td>{{count($item->yazi)}}</td> 
                     <td>{{count($item->yorum)}}</td> 
@@ -32,9 +32,8 @@
                             @else
                                 <a href="/admin/kullanicilar/aktif/{{$item->id}}" title="Pasif et" onclick="return confirm('Pasif Etmek İstediğinize Emin Misiniz?!')"><i class="fa fa-thumbs-up"></i></a>
                             @endif 
-                        @endif
-                        @if ($item->is_admin == 1)
-                            <i class="fa fa-star" title="Admin Yetkili Kullanıcı" style="color:green"></i>
+                        @else
+                            <a ><i class="fa fa-exclamation-triangle"></i> Yetkisiz Kullanıcı</a>
                         @endif
                     </td>
                 </tr> 
