@@ -54,11 +54,11 @@ class HomeController extends Controller{
             $yazi = Yazi::whereUrl($url)->firstOrFail();
             $yazi_id = $yazi->id;
             $yorum = new Yorum;
-            $yorum->email = Auth::user()->email;
-            $yorum->isim = Auth::user()->name;
+            $yorum->user_id = Auth::user()->id;
             $yorum->yorum = $request->yorum;
             $yorum->yazi_id = $yazi_id;
             $yorum->save();
+            Session::flash('basarı', 'Yorumunuz Onaylandıktan Sonra Yayınlanacak.');
         } 
         return redirect()->route("yazi",['url' => $url]);
     }

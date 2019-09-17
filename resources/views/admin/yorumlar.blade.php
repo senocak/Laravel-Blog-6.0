@@ -51,11 +51,7 @@
                             <h2><a href="/yazi/{{ $item->yazi->url }}" target="_blank" style="text-decoration: none;">{{ $item->yazi->baslik }}</a></h2>
                         </header>
                         <div class="w3-container">
-                            <p>
-                                @php($search = array(":smile",":sad",":heart",":hah",":love",":hmm",":gross",":angry",":fire",":rock"))
-                                @php($replace = array("😊","😔","❤","😀","😍","😐","🤢","😡","🔥","🤘"))
-                                {{ str_replace($search,$replace,trim($item->yorum)) }}
-                            </p>
+                            <p>{{ trim($item->yorum) }}</p>
                         </div>
                         <footer class="w3-container w3-teal"><p>{{$item->user->name}}</p></footer>
                     </div>
