@@ -15,11 +15,9 @@ class KategoriController extends Controller{
     public function __construct(){ 
         $this->middleware(function ($request, $next) {  
             if (Auth::user()->email_verified_at == null) {
-                /*
                 //Auth::user()->is_admin != 1 && 
                 Redirect::to('/')->send();
                 abort(404);
-                */
             }
             return $next($request);
         });

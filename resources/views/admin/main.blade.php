@@ -52,7 +52,11 @@
     <div class="w3-main" style="margin-left:240px;margin-top:43px;" id="body">
       @yield('body') 
       <footer class="w3-container w3-black"> 
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+        <p>
+          Anıl Şenocak 
+          <a href="https://github.com/senocak" target="_blank"><i class="fa fa-github w3-right"></i></a> 
+          <a href="https://linkedin.com/in/anilsenocak27" target="_blank"><i class="fa fa-linkedin w3-right"></i></a>
+        </p>
       </footer> 
     </div> 
     <script> 

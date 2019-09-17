@@ -13,13 +13,11 @@ class YaziController extends Controller{
     private $dizi = [];
     public function __construct(){ 
         $this->middleware(function ($request, $next){
-            if (Auth::user()->email_verified_at == null){
-                /*
+            if (Auth::user()->email_verified_at == null){ 
                 //Auth::user()->is_admin != 1 && 
                 Session::flash('hata', 'Onaylanmamış Kullanıcı');
                 Redirect::to('/')->send();
-                abort(404);
-                */
+                abort(404); 
             }
             return $next($request);
         });
