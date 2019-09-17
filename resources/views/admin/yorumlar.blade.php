@@ -48,7 +48,7 @@
                     <div class="w3-modal-content">
                         <header class="w3-container w3-teal"> 
                             <span onclick="document.getElementById('id_{{ $item->id }}').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                            <h2>{{ $item->yazi->baslik }}</h2>
+                            <h2><a href="/yazi/{{ $item->yazi->url }}" target="_blank" style="text-decoration: none;">{{ $item->yazi->baslik }}</a></h2>
                         </header>
                         <div class="w3-container">
                             <p>
@@ -65,10 +65,7 @@
             @endforelse 
         </tbody>
     </table>
-    {{ $dizi["yorumlar"]->links("posts_page")}} 
-
-
-
+    {{ $dizi["yorumlar"]->links("posts_page")}}  
 @endsection
 @section('scripts')
     <script>

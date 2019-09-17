@@ -27,14 +27,14 @@
         <div class="w3-col s4">
           <img src="/images/{{ Auth::user()->picture }}" class=" w3-margin-right" style="width:70px">
         </div>
-        <div class="w3-col s8 w3-bar"> 
-          <span style="padding-left: 15px;"><strong>{{ Auth::user()->name }}</strong></span>
+        <div class="w3-col s8 w3-bar"  style="padding-left: 10px;"> 
+          <span><strong>{{ Auth::user()->name }}</strong></span>
           <br>
-          @if(Auth::user()->is_admin ==1)<span style="padding-left: 15px;">Sistem Admin</span>@endif
+          @if(Auth::user()->is_admin ==1)<i class="fa fa-star" title="Admin Yetkili Kullanıcı" style="color:green"></i>@endif
           <br>
-          <a href="/admin/mesaj" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
-          <a href="/admin/profil" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-          <a href="/admin/ayarlar" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+          <a href="/admin/mesaj" class="w3-bar-item w3-button w3-tiny"><i class="fa fa-envelope"></i></a>
+          <a href="/admin/profil" class="w3-bar-item w3-button w3-tiny"><i class="fa fa-user"></i></a>
+          <a href="/admin/ayarlar" class="w3-bar-item w3-button w3-tiny"><i class="fa fa-cog"></i></a>
         </div>
       </div>
       <hr> 

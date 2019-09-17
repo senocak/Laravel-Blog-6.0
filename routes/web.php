@@ -33,5 +33,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     Route::get("/yorumlar","Admin\YorumlarController@yorumlar_index")->name("admin.yorumlar.index");
     Route::get('/yorumlar/limit/{limit?}', 'Admin\YorumlarController@yorumlar_limit')->name('admin.yorumlar.index.limit');
     Route::get('/yorumlar/aktif/{id}', 'Admin\YorumlarController@yorumlar_aktif_pasif')->name('admin.yorumlar.aktif_pasif');
-    
+    //Kullanıcılar
+    Route::get("/kullanicilar","Admin\KullanicilarController@kullanicilar_index")->name("admin.kullanicilar.index");
+    Route::get('/kullanicilar/aktif/{id}', 'Admin\KullanicilarController@kullanicilar_aktif_pasif')->name('admin.kullanicilar.aktif_pasif');
 });
