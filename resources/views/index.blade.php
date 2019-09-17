@@ -77,8 +77,7 @@
                         <a href="/yazi/{{$yorumlar->url}}#yorum_{{$y->id}}" style="text-decoration: none">
                             {{substr($y->yorum,0,100)}}...
                         </a>
-                    </span>
-                    {{$y->id}}
+                    </span> 
                 </li>
             @endforeach
         @endforeach  
