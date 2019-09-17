@@ -29,5 +29,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     Route::get('/kategoriler/duzenle/{id}', 'Admin\KategoriController@kategoriler_duzenle')->name('admin.kategoriler.duzenle');
     Route::post('/kategoriler/duzenle/{id}', 'Admin\KategoriController@kategoriler_duzenle_post')->name('admin.kategoriler.duzenle.post');
     Route::get('/kategoriler/sil/{id}', 'Admin\KategoriController@kategoriler_sil')->name('admin.kategoriler.sil');
+    //Yorumlar
+    Route::get("/yorumlar","Admin\YorumlarController@yorumlar_index")->name("admin.yorumlar.index");
+    Route::get('/yorumlar/limit/{limit?}', 'Admin\YorumlarController@yorumlar_limit')->name('admin.yorumlar.index.limit');
+    Route::get('/yorumlar/aktif/{id}', 'Admin\YorumlarController@yorumlar_aktif_pasif')->name('admin.yorumlar.aktif_pasif');
     
 });

@@ -42,6 +42,7 @@
         <a href="/admin" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "") w3-blue @endif"><i class="fa fa-users fa-fw"></i>  Anasayfa</a>
         <a href="/admin/yazilar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "yazilar") w3-blue @endif"><i class="fa fa-eye fa-fw"></i>  Yazılar</a>
         <a href="/admin/kategoriler" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "kategoriler") w3-blue @endif"><i class="fa fa-bank fa-fw"></i>  Kategoriler</a>
+        <a href="/admin/yorumlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "yorumlar") w3-blue @endif"><i class="fa fa-comment fa-fw"></i>  Yorumlar</a> 
         <a href="/admin/kullanicilar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "kullanicilar") w3-blue @endif"><i class="fa fa-users fa-fw"></i>  Kullanıcılar</a>
         <a href="/admin/mesajlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "mesajlar") w3-blue @endif"><i class="fa fa-envelope fa-fw"></i>  Mesajlar</a> 
         <a href="/admin/ayarlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "ayarlar") w3-blue @endif"><i class="fa fa-cog fa-fw"></i>  Ayarlar</a><br><br>
