@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Session;
 class HomeController extends Controller{
     private $return_dizi=[];
     public function __construct(){
-        $this->return_dizi["kategoriler"] = Kategori::all();
+        $this->return_dizi["kategoriler"] = Kategori::orderBy("sira","asc")->get();
         $this->return_dizi["limit"] = 5;
         $this->return_dizi["yorumlar"] = Yazi::whereHas('yorum', function($query){$query->whereOnay(1)->orderBy("id","desc")->limit($this->return_dizi["limit"]);})
                                                 ->with(['yorum' => function ($query){$query->whereOnay(1)->orderBy("id","desc")->limit($this->return_dizi["limit"]);}])
-                                                ->with("kategori")
+                                                ->with("kategori") 
                                                 ->get();
     }
     public function index(){

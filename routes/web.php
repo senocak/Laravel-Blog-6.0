@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
     Route::post("/kategoriler/sirala", "Admin\KategoriController@kategoriler_sirala")->name("admin.kategoriler.sirala");
     Route::get('/kategoriler/ekle', 'Admin\KategoriController@kategoriler_ekle')->name('admin.kategoriler.ekle');
     Route::post('/kategoriler/ekle', 'Admin\KategoriController@kategoriler_ekle_post')->name('admin.kategoriler.ekle.post');
-   
+    Route::get('/kategoriler/duzenle/{id}', 'Admin\KategoriController@kategoriler_duzenle')->name('admin.kategoriler.duzenle');
+    Route::post('/kategoriler/duzenle/{id}', 'Admin\KategoriController@kategoriler_duzenle_post')->name('admin.kategoriler.duzenle.post');
+    Route::get('/kategoriler/sil/{id}', 'Admin\KategoriController@kategoriler_sil')->name('admin.kategoriler.sil');
     
 });
