@@ -1,7 +1,7 @@
 @extends('admin.main')
 @section('body')
     <header class="w3-container w3-row-padding" style="padding-top:22px">
-        <div class="w3-third"><h5><b><i class="fa fa-dashboard"></i> Kullanıcılar</b></h5></div> 
+        <div class="w3-third"><a onclick="kapat_ac();" class="w3-bar-item w3-left w3-container w3-row-padding"><i class="fa fa-bars"></i></a></span> Admin Paneli</div> 
         <div class="w3-third w3-right"><input type="text" id="myInput" onkeyup="search()" placeholder="Aktif sayfada ara..." class="w3-input"></div> 
     </header>
     @if(Session::has('hata'))<span class="w3-tag w3-round w3-red w3-block" style="padding:3px"><span class="w3-tag w3-round w3-red w3-border w3-border-white  w3-block">{{ Session::get('hata') }}</span></span>@endif

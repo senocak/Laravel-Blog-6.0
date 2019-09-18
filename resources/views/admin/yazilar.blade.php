@@ -4,7 +4,7 @@
 @endsection
 @section('body')
     <header class="w3-container w3-row-padding" style="padding-top:22px">
-        <div class="w3-third"><h5><b><i class="fa fa-dashboard"></i> Yazılar</b></h5></div> 
+        <div class="w3-third"><a onclick="kapat_ac();" class="w3-bar-item w3-left w3-container w3-row-padding"><i class="fa fa-bars"></i></a></span> Admin Paneli</div> 
         <div class="w3-third"><input type="text" id="myInput" onkeyup="search()" placeholder="Aktif sayfada ara..." class="w3-input"></div> 
         <div class="w3-third w3-right">
             <select class="w3-select kayıt_goster" name="limit" onchange="this.options[this.selectedIndex].value && (window.location = '/admin/yazilar/limit/'+this.options[this.selectedIndex].value);">

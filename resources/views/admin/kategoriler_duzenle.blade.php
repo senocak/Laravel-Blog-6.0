@@ -10,8 +10,10 @@
         }
     </script>
 @endsection
-@section('body') 
-    <header class="w3-container w3-row-padding" style="padding-top:22px"> <h5><b><i class="fa fa-dashboard"></i> Yazı</b></h5></header>  
+@section('body')
+    <header class="w3-container w3-row-padding" style="padding-top:22px;    padding-bottom: 11px;">
+        <a onclick="kapat_ac();" class="w3-container w3-row w3-bar-item w3-left w3-container w3-row-padding"><i class="fa fa-bars"></i></a></span> Admin Paneli
+    </header>  
     <div class="w3-container w3-card-4">
         {!! Form::open(array('files' => true)) !!}
             {!! Form::label("baslik", "Kategori Başlığı", ["class"=>"w3-text-grey"]) !!}

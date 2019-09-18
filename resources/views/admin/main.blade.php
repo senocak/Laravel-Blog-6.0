@@ -12,29 +12,22 @@
       {!! Html::script('https://code.jquery.com/ui/1.12.1/jquery-ui.js') !!}
       @yield('stylesheet')
   </head>
-  <body class="w3-light-grey">
-    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4"> 
-      <span class="w3-bar-item w3-right"> 
-          <form id="logout-form" action="{{ route('logout') }}" method="POST">
-              {{ csrf_field() }}
-              <button type="submit" class="w3-btn w3-red w3-ripple w3-block w3-small" href="{{ route('logout') }}" >Çıkış Yap</button>
-          </form> 
-      </span>
-      <span class="w3-bar-item w3-left"><a onclick="kapat_ac();" style="text-decoration: none" target="_blank" >Admin Paneli <i class="fa fa-bars"></i></a></span>
-    </div>
+  <body class="w3-light-grey" style="padding-top: 1px;">
+    
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:235px;" id="mySidebar"><br>
       <div class="w3-container w3-row">
         <div class="w3-col s4">
-          <img src="/images/{{ Auth::user()->picture }}" class=" w3-margin-right" style="width:70px">
+          <img src="/images/{{ Auth::user()->picture }}" class=" w3-margin-right" style="width:75px">
         </div>
-        <div class="w3-col s8 w3-bar"  style="padding-left: 10px;"> 
-          <span><strong>{{ Auth::user()->name }}</strong></span>
-          <br>
+        <div class="w3-col s8 w3-bar w3-right"  style="padding-left: 10px;"> 
+          <span>{{ Auth::user()->name }}</span>
+          <i class="fa fa-bars" onclick="kapat_ac();"></i>
           @if(Auth::user()->is_admin ==1)<i class="fa fa-star" title="Admin Yetkili Kullanıcı" style="color:green"></i>@endif
-          <br>
-          <a href="/admin/mesaj" class="w3-bar-item w3-button w3-tiny"><i class="fa fa-envelope"></i></a>
-          <a href="/admin/profil" class="w3-bar-item w3-button w3-tiny"><i class="fa fa-user"></i></a>
-          <a href="/admin/ayarlar" class="w3-bar-item w3-button w3-tiny"><i class="fa fa-cog"></i></a>
+          <br><br>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST">
+              {{ csrf_field() }}
+              <button type="submit" class="w3-btn w3-red w3-ripple w3-block w3-padding-tiny" href="{{ route('logout') }}" >Çıkış Yap</button>
+          </form> 
         </div>
       </div>
       <hr> 
@@ -44,12 +37,10 @@
         <a href="/admin/kategoriler" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "kategoriler") w3-blue @endif"><i class="fa fa-bank fa-fw"></i>  Kategoriler</a>
         <a href="/admin/yorumlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "yorumlar") w3-blue @endif"><i class="fa fa-comment fa-fw"></i>  Yorumlar</a> 
         <a href="/admin/kullanicilar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "kullanicilar") w3-blue @endif"><i class="fa fa-users fa-fw"></i>  Kullanıcılar</a>
-        <a href="/admin/mesajlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "mesajlar") w3-blue @endif"><i class="fa fa-envelope fa-fw"></i>  Mesajlar</a> 
-        <a href="/admin/ayarlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "ayarlar") w3-blue @endif"><i class="fa fa-cog fa-fw"></i>  Ayarlar</a><br><br>
       </div>
     </nav>
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-    <div class="w3-main" style="margin-left:240px;margin-top:43px;" id="body">
+    <div class="w3-main" style="margin-left:240px;" id="body"> 
       @yield('body') 
       <footer class="w3-container w3-black"> 
         <p>
@@ -63,7 +54,8 @@
       var mySidebar = document.getElementById("mySidebar");
       var bodybar = document.getElementById("body");
       function kapat_ac() { 
-        if (mySidebar.style.display == "none") {
+        console.log(mySidebar.style.display);
+        if (mySidebar.style.display == "none" || mySidebar.style.display == "") {
           mySidebar.style.setProperty('display', 'block', 'important');
           bodybar.style.marginLeft = "240px";
         } else {
