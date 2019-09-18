@@ -27,6 +27,7 @@
                 <th>Başlık</th>
                 <th>Kategori</th>
                 <th>Yorum</th>
+                <th>Begeni</th>
                 <th>Yazar</th>
                 <th>İşlemler</th>
             </tr>
@@ -37,12 +38,9 @@
                 <tr id="item-{{ $item->id }}">
                     <td class="sortable">{{$sira}}</td>
                     <td>{{$item->baslik}}</td>
-                    <td>
-                        <a href="/admin/kategoriler/{{$item->kategori->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{$item->kategori->baslik}}</a>
-                    </td>
-                    <td>
-                        <a href="/admin/yorumlar/yazi/{{$item->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{count($item->yorum)}} Yorum</a>
-                    </td>
+                    <td><a href="/admin/kategoriler/{{$item->kategori->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{$item->kategori->baslik}}</a></td>
+                    <td><a href="/admin/yorumlar/yazi/{{$item->url}}" style="text-decoration: none" class="w3-btn w3-padding-small">{{count($item->yorum)}} Yorum</a></td>
+                    <td>{{count($item->begeni)}} 👍</td>
                     <td>{{$item->user->name}}</td>
                     <td>
                         <a href="/admin/yazilar/duzenle/{{$item->id}}" title="Düzenle"><i class="fa fa-edit"></i></a>
