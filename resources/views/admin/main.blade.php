@@ -42,7 +42,7 @@
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
     <div class="w3-main" style="margin-left:240px;" id="body"> 
       @yield('body') 
-      <footer class="w3-container w3-black"> 
+      <footer class="w3-container w3-black" style="position:fixed;right: 0;bottom: 0;left: 0;text-align: center;"> 
         <p>
           Anıl Şenocak 
           <a href="https://github.com/senocak" target="_blank"><i class="fa fa-github w3-right"></i></a> 
