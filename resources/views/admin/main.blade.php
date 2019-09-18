@@ -38,17 +38,15 @@
         <a href="/admin/yorumlar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "yorumlar") w3-blue @endif"><i class="fa fa-comment fa-fw"></i>  Yorumlar</a> 
         <a href="/admin/kullanicilar" class="w3-bar-item w3-button w3-padding  @if(Request::segment(2)  == "kullanicilar") w3-blue @endif"><i class="fa fa-users fa-fw"></i>  Kullanıcılar</a>
       </div>
+      <footer style="position: absolute;right: 0;bottom: 0;left: 0;padding: 1rem;background-color: #efefef;text-align: center;">
+        Anıl Şenocak 
+        <a href="https://github.com/senocak" target="_blank"><i class="fa fa-github w3-right"></i></a> 
+        <a href="https://linkedin.com/in/anilsenocak27" target="_blank"><i class="fa fa-linkedin w3-right"></i></a>
+      </footer>
     </nav>
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
     <div class="w3-main" style="margin-left:240px;" id="body"> 
-      @yield('body') 
-      <footer class="w3-container w3-black" style="position:fixed;right: 0;bottom: 0;left: 0;text-align: center;"> 
-        <p>
-          Anıl Şenocak 
-          <a href="https://github.com/senocak" target="_blank"><i class="fa fa-github w3-right"></i></a> 
-          <a href="https://linkedin.com/in/anilsenocak27" target="_blank"><i class="fa fa-linkedin w3-right"></i></a>
-        </p>
-      </footer> 
+      @yield('body')  
     </div> 
     <script> 
       var mySidebar = document.getElementById("mySidebar");
