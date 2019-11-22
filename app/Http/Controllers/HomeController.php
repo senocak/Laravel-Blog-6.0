@@ -9,7 +9,7 @@ use App\Yorum;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Image;
-use Storage; 
+use Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -21,11 +21,11 @@ class HomeController extends Controller{
         $this->return_dizi["limit"] = 5;
         $this->return_dizi["yorumlar"] = Yazi::whereHas('yorum', function($query){$query->whereOnay(1)->orderBy("id","desc")->limit($this->return_dizi["limit"]);})
                                                 ->with(['yorum' => function ($query){$query->whereOnay(1)->orderBy("id","desc")->limit($this->return_dizi["limit"]);}])
-                                                ->with("kategori") 
+                                                ->with("kategori")
                                                 ->get();
     }
     public function index(){
-        $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);      
+        $this->return_dizi["yazilar"] = Yazi::whereAktif(1)->with('kategori')->with(["yorum" => function($q){ $q->where('yorums.onay', '=', 1); }])->with('user')->orderBy("sira","asc")->paginate(4);
         if (count($this->return_dizi["yazilar"])==0) {
             return view('404');
         }else{
@@ -50,7 +50,7 @@ class HomeController extends Controller{
         return view('yazi', ['return_dizi' => $this->return_dizi]);
     }
     public function yorum_ekle($url, Request $request){
-        if(Auth::check()){ 
+        if(Auth::check()){
             $yazi = Yazi::whereUrl($url)->firstOrFail();
             $yazi_id = $yazi->id;
             $yorum = new Yorum;
@@ -59,7 +59,7 @@ class HomeController extends Controller{
             $yorum->yazi_id = $yazi_id;
             $yorum->save();
             Session::flash('basarı', 'Yorumunuz Onaylandıktan Sonra Yayınlanacak.');
-        } 
+        }
         return redirect()->route("yazi",['url' => $url]);
     }
     public function profil(){
@@ -76,14 +76,14 @@ class HomeController extends Controller{
         $name = $request->name;
         $email = $request->email;
         $password = $request->password;
-        $password2 = $request->password2; 
+        $password2 = $request->password2;
         $mesaj = "";
         if ($password) {
             if ($password2) {
                 if ($password == $password2) {
                     $user->password = bcrypt($password);
                     Session::flash('basarı', 'Şifre Değiştirildi.');
-                }else{ 
+                }else{
                     Session::flash('hata', 'Şifreleriniz Eşleşmiyor.');
                 }
             }else{
@@ -99,8 +99,8 @@ class HomeController extends Controller{
             $img=$request->file('picture');
             $filename=$image_name.".".$img->getClientOriginalExtension();
             $location=public_path('images/'.$filename);
-            //Image::make($img)->resize(400, null, function ($constraint) {$constraint->aspectRatio();})->save($location); 
-            Image::make($img)->save($location); 
+            //Image::make($img)->resize(400, null, function ($constraint) {$constraint->aspectRatio();})->save($location);
+            Image::make($img)->save($location);
             $user->picture=$filename;
             Storage::delete(Auth::user()->picture);
         }
@@ -113,11 +113,10 @@ class HomeController extends Controller{
         $user = User::findOrFail(Auth::user()->id);
         $user->email_verify_token = $this->generateRandomString();
         if ($user->save()) {
-            
             $data['title'] = "This is Test Mail Tuts Make";
             Mail::send('auth.verify', $data, function($message) {
                 $message->to('tutsmake@gmail.com', 'Receiver Name')->subject('Tuts Make Mail');
-            }); 
+            });
             if (Mail::failures()) {
                 return response()->Fail('Sorry! Please try again latter');
             }else{
@@ -126,9 +125,8 @@ class HomeController extends Controller{
         } else {
             return "0";
         }
-        
     }
-    public function email_onayla_get($token){ 
+    public function email_onayla_get($token){
         $user = User::where("email_verify_token",$token)->firstOrFail();
         if ($user) {
             $user->email_verified_at = Carbon::now();
@@ -143,7 +141,7 @@ class HomeController extends Controller{
             return redirect()->route("index");
         }
         $begeni = Begeni::where([['yazi_id', '=', $yazi->id],['ip', '=', $ip]])->first();
-        if ($begeni == "") { 
+        if ($begeni == "") {
             $begeni = new Begeni;
             $begeni->yazi_id = $yazi->id;
             $begeni->ip = $ip;

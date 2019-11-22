@@ -3,7 +3,7 @@
     <head>
         <title>@yield('title', 'Anıl Şenocak - Laravel6.0 Blog Template')</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {!! Html::style('css/w3.css') !!}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <style>body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}</style>
@@ -12,44 +12,44 @@
         {!! Html::script('js/prism.js') !!}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>img{max-width:100%;max-height:100%;}</style>
-        {!! Html::script('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!} 
+        {!! Html::script('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') !!}
         @yield('stylesheet')
     </head>
     <body class="w3-light-grey">
         <div class="w3-content" style="max-width:1800px">
-            <header class="w3-container w3-center w3-padding-32"> 
+            <header class="w3-container w3-center w3-padding-32">
                 <h1><b><a href="/" style="text-decoration: none">Anıl Şenocak</a></b></h1>
                 <p>@yield('kategoriler')</p>
-            </header> 
+            </header>
             @if(Session::has('hata'))<span class="w3-tag w3-round w3-red w3-block" style="padding:3px"><span class="w3-tag w3-round w3-red w3-border w3-border-white  w3-block">{{ Session::get('hata') }}</span></span>@endif
             @if(Session::has('basarı'))<span class="w3-tag w3-round w3-green w3-block" style="padding:3px"><span class="w3-tag w3-round w3-green w3-border w3-border-white  w3-block">{{ Session::get('basarı') }}</span></span>@endif
             <div class="w3-row">
                 <div class="w3-col l8 s12">
                     @yield('body')
                 </div>
-                <div class="w3-col l4">   
-                    <p class="mesaj_gonderildi w3-margin w3-container w3-green" style="display: none;">If you click on the "Hide" button, I will disappear.</p> 
-                    <script type="text/javascript"> 
-                        $(document).ready(function(){  
+                <div class="w3-col l4">
+                    <p class="mesaj_gonderildi w3-margin w3-container w3-green" style="display: none;">If you click on the "Hide" button, I will disappear.</p>
+                    <script type="text/javascript">
+                        $(document).ready(function(){
                             $(".mesaj_gonderildi").hide();
-                            $(".mail_gonder_btn").click(function(e){  
-                                e.preventDefault(); 
+                            $(".mail_gonder_btn").click(function(e){
+                                e.preventDefault();
                                 $.ajax({
                                     type:'POST',
                                     headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                                    url:'{{ route('email_onayla') }}', 
-                                    success:function(data){ 
+                                    url:'{{ route('email_onayla') }}',
+                                    success:function(data){
                                         $(".mesaj_gonderildi").show();
-                                        if (data == 1) {  
+                                        if (data == 1) {
                                             $(".mesaj_gonderildi").text("Kod Mailinize Gönderildi.");
-                                        } else { 
+                                        } else {
                                             $(".mesaj_gonderildi").text("Hata Meydana Geldi.");
                                         }
-                                    } 
+                                    }
                                 });
                             });
                         });
-                    </script>   
+                    </script>
                     <div class="w3-card w3-margin ">
                         @if(Auth::check())
                             <div class="w3-bar">
@@ -58,7 +58,7 @@
                                 @endif
                                 @if (Auth::user()->is_admin == 1)
                                     <span class="w3-bar-item w3-right"><i class="fa fa-star" title="Admin Yetkili Kullanıcı"></i></span>
-                                @endif 
+                                @endif
                                 <img src="/images/{{ Auth::user()->picture }}" class="w3-bar-item w3-c ircle w3-hide-small" style="width:80px">
                                 <span class="w3-large w3-margin w3-center">{{ Auth::user()->name }}</span><br>
                                 <span class="w3-margin w3-center">{{ Auth::user()->email }}</span><br>
@@ -70,7 +70,7 @@
                                         <div class="w3-cell">
                                             <a class="w3-btn w3-black w3-ripple w3-block" href="/admin">Admin Paneli</a>
                                         </div>
-                                    @endif 
+                                    @endif
                                     <div class="w3-cell">
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                             {{ csrf_field() }}
@@ -78,36 +78,36 @@
                                         </form>
                                     </div>
                                     @if (Auth::user()->email_verified_at == null)
-                                        <div class="w3-cell"> 
+                                        <div class="w3-cell">
                                             <form action="{{ route('email_onayla') }}" method="POST">
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="w3-btn w3-blue w3-ripple w3-block mail_gonder_btn">Mail Onayla</button>
                                             </form>
                                         </div>
                                     @endif
-                                </div>  
+                                </div>
                             </div>
                         @else
                             <div class="w3-bar w3-black">
                                 <button class="w3-bar-item w3-button tablink w3-red" onclick="openCity(event,'login')">Giriş Yap</button>
-                                <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'register')">Kayıt Ol</button> 
-                            </div> 
+                                <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'register')">Kayıt Ol</button>
+                            </div>
                             <div id="login" class="w3-container w3-border auth">
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
-                                    <p><input type="email" class="w3-input w3-border" required="" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}"></p> 
+                                    <p><input type="email" class="w3-input w3-border" required="" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}"></p>
                                     <p><input type="password" class="w3-input w3-border" required="" placeholder="{{ __('Password') }}" name="password"></p>
                                     <p><input class="w3-check w3-border" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>{{ __('Remember Me') }}</p>
                                     <p><button type="submit" class="w3-button w3-block w3-green">{{ __('Login') }} &nbsp; ❯</button></p>
                                 </form>
                             </div>
-                            <div id="register" class="w3-container w3-border auth" style="display:none"> 
+                            <div id="register" class="w3-container w3-border auth" style="display:none">
                                 <form method="POST" action="{{ route('register') }}">
                                     @csrf
                                     <p>
                                         <input type="text" class="w3-input w3-border" required="" placeholder="{{ __('İsminiz') }}" name="name" value="{{ old('name') }}">
                                         @error('name')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
-                                    </p> 
+                                    </p>
                                     <p>
                                         <input type="email" class="w3-input w3-border" required="" placeholder="{{ __('E-Mail Adresiniz') }}" name="email" value="{{ old('email') }}">
                                         @error('email')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
@@ -115,12 +115,12 @@
                                     <p>
                                         <input type="password" class="w3-input w3-border" required="" placeholder="{{ __('Şifreniz') }}" name="password" autocomplete="new-password">
                                         @error('password')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
-                                    </p> 
+                                    </p>
                                     <p>
                                         <input type="password" class="w3-input w3-border" required="" placeholder="{{ __('Şifreniz Tekrar') }}" name="password_confirmation" autocomplete="new-password">
                                     </p>
                                     <p><button type="submit" class="w3-button w3-block w3-green">{{ __('Kayıt Ol') }} &nbsp; ❯</button></p>
-                                </form> 
+                                </form>
                             </div>
                         @endif
                     </div>
@@ -132,7 +132,7 @@
                             @yield('yorumlar')
                         </ul>
                     </div>
-                    <hr>  
+                    <hr>
                     <div class="w3-card w3-margin w3-margin-top">
                         <img src="/images/pp.jpg" style="width:100%">
                             <div class="w3-container w3-white">
@@ -143,7 +143,8 @@
                                     <a href="https://linkedin.com/in/anilsenocak27" target="_blank"><i class="fa fa-linkedin"></i></a>
                                 </div>
                             </h4>
-                            <p>Love to play, Play to ride, Ride to live, Live to love </p>
+                            <p>Love to play, Play to ride, Ride to live, Live to love </p><br>
+                            <iframe src="https://githubbadge.appspot.com/senocak" style="border: 0;height: 111px;width: 100%;overflow: hidden;" frameBorder="0" title="github"></iframe>
                         </div>
                     </div>
                 </div>
@@ -165,6 +166,6 @@
                 document.getElementById(authName).style.display = "block";
                 evt.currentTarget.className += " w3-red";
             }
-        </script> 
+        </script>
     </body>
 </html>
